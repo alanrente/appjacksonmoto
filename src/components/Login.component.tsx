@@ -7,7 +7,7 @@ const onFinish: FormProps<User>["onFinish"] = async (values) => {
   const result = await login({ senha: values.senha, usuario: values.usuario });
 
   sessionStorage.setItem("@token", JSON.stringify(result));
-  window.location.assign("/home");
+  window.location.assign("/app");
 };
 
 const onFinishFailed: FormProps<User>["onFinishFailed"] = (errorInfo) => {
