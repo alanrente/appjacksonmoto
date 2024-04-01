@@ -1,18 +1,16 @@
 import React from "react";
 import { Button, Form, type FormProps, Input } from "antd";
+import { User } from "../interfaces/login.interface";
+import { login } from "../services/login.service";
 
-type FieldType = {
-  username?: string;
-  password?: string;
-  remember?: string;
+const onFinish: FormProps<User>["onFinish"] = async (values) => {
+  const result = await login({ senha: values.senha, usuario: values.usuario });
+
+  sessionStorage.setItem("@token", JSON.stringify(result));
+  window.location.assign("/home");
 };
 
-const onFinish: FormProps<FieldType>["onFinish"] = async (values) => {
-  sessionStorage.setItem("@client", JSON.stringify(values));
-  console.log("Success:", values);
-};
-
-const onFinishFailed: FormProps<FieldType>["onFinishFailed"] = (errorInfo) => {
+const onFinishFailed: FormProps<User>["onFinishFailed"] = (errorInfo) => {
   console.log("Failed:", errorInfo);
 };
 
@@ -27,29 +25,21 @@ const LoginComponent: React.FC = () => (
     onFinishFailed={onFinishFailed}
     autoComplete="off"
   >
-    <Form.Item<FieldType>
+    <Form.Item<User>
       label="Usuário"
-      name="username"
+      name="usuario"
       rules={[{ required: true, message: "Insira um Usuário!" }]}
     >
       <Input />
     </Form.Item>
 
-    <Form.Item<FieldType>
+    <Form.Item<User>
       label="Senha"
-      name="password"
+      name="senha"
       rules={[{ required: true, message: "Insira uma senha!" }]}
     >
       <Input.Password />
     </Form.Item>
-
-    {/* <Form.Item<FieldType>
-      name="remember"
-      valuePropName="checked"
-      wrapperCol={{ offset: 8, span: 16 }}
-    >
-      <Checkbox>Remember me</Checkbox>
-    </Form.Item> */}
 
     <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
       <Button type="primary" htmlType="submit">
