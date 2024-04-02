@@ -1,24 +1,25 @@
-import "./App.css";
 import type { LoaderFunctionArgs } from "react-router-dom";
 import {
+  Form,
+  Link,
   Outlet,
   RouterProvider,
   createBrowserRouter,
   redirect,
+  useActionData,
   useFetcher,
-  useNavigate,
+  useLocation,
+  useNavigation,
   useRouteLoaderData,
 } from "react-router-dom";
 import { fakeAuthProvider } from "./auth";
-import { PoweroffOutlined, LoginOutlined } from "@ant-design/icons";
-import LoginComponent from "./components/Login.component";
-import { Button, Divider, Space } from "antd";
 
 const router = createBrowserRouter([
   {
     id: "root",
     path: "/",
     loader() {
+      // Our root route always provides the user, if logged in
       return { user: fakeAuthProvider.username };
     },
     Component: Layout,
@@ -31,7 +32,7 @@ const router = createBrowserRouter([
         path: "login",
         action: loginAction,
         loader: loginLoader,
-        Component: LoginComponent,
+        Component: LoginPage,
       },
       {
         path: "protected",
@@ -57,27 +58,20 @@ export default function App() {
 }
 
 function Layout() {
-  const { isAuthenticated } = fakeAuthProvider;
-  const navigate = useNavigate();
-
   return (
     <div>
+      <h1>Auth Example using RouterProvider</h1>
+
       <AuthStatus />
 
-      <Space style={{ margin: "1vh 0" }}>
-        <Button onClick={() => navigate("/")}>Public Page</Button>
-        {isAuthenticated && (
-          <Button
-            onClick={() => {
-              navigate("/protected");
-            }}
-          >
-            Protected Page
-          </Button>
-        )}
-      </Space>
-
-      <Divider style={{ margin: "1vh 0" }} />
+      <ul>
+        <li>
+          <Link to="/">Public Page</Link>
+        </li>
+        <li>
+          <Link to="/protected">Protected Page</Link>
+        </li>
+      </ul>
 
       <Outlet />
     </div>
@@ -85,42 +79,24 @@ function Layout() {
 }
 
 function AuthStatus() {
+  // Get our logged in user, if they exist, from the root route loader data
   let { user } = useRouteLoaderData("root") as { user: string | null };
   let fetcher = useFetcher();
-  const navigate = useNavigate();
+
+  if (!user) {
+    return <p>You are not logged in.</p>;
+  }
 
   let isLoggingOut = fetcher.formData != null;
 
-  function toLogin() {
-    navigate("/login");
-  }
-
   return (
-    <div className="App-header">
-      {!user ? (
-        <>
-          <p>Você não está logado!</p>
-          <fetcher.Form method="post" action="/login">
-            <Button
-              htmlType="submit"
-              type="default"
-              loading={isLoggingOut}
-              onClick={toLogin}
-            >
-              <LoginOutlined />
-            </Button>
-          </fetcher.Form>
-        </>
-      ) : (
-        <>
-          <p>Bem vindo {user}!</p>
-          <fetcher.Form method="post" action="/logout">
-            <Button htmlType="submit" type="default" loading={isLoggingOut}>
-              <PoweroffOutlined />
-            </Button>
-          </fetcher.Form>
-        </>
-      )}
+    <div>
+      <p>Welcome {user}!</p>
+      <fetcher.Form method="post" action="/logout">
+        <button type="submit" disabled={isLoggingOut}>
+          {isLoggingOut ? "Signing out..." : "Sign out"}
+        </button>
+      </fetcher.Form>
     </div>
   );
 }
@@ -153,6 +129,36 @@ async function loginLoader() {
     return redirect("/");
   }
   return null;
+}
+
+function LoginPage() {
+  let location = useLocation();
+  let params = new URLSearchParams(location.search);
+  let from = params.get("from") || "/";
+
+  let navigation = useNavigation();
+  let isLoggingIn = navigation.formData?.get("username") != null;
+
+  let actionData = useActionData() as { error: string } | undefined;
+
+  return (
+    <div>
+      <p>You must log in to view the page at {from}</p>
+
+      <Form method="post" replace>
+        <input type="hidden" name="redirectTo" value={from} />
+        <label>
+          Username: <input name="username" />
+        </label>{" "}
+        <button type="submit" disabled={isLoggingIn}>
+          {isLoggingIn ? "Logging in..." : "Login"}
+        </button>
+        {actionData && actionData.error ? (
+          <p style={{ color: "red" }}>{actionData.error}</p>
+        ) : null}
+      </Form>
+    </div>
+  );
 }
 
 function PublicPage() {

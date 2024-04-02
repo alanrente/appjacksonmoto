@@ -1,52 +1,63 @@
-import React from "react";
+import { useState } from "react";
 import { Button, Form, type FormProps, Input } from "antd";
 import { User } from "../interfaces/login.interface";
-import { login } from "../services/login.service";
+import { useLocation, useNavigate } from "react-router-dom";
+import { fakeAuthProvider } from "../auth";
 
-const onFinish: FormProps<User>["onFinish"] = async (values) => {
-  const result = await login({ senha: values.senha, usuario: values.usuario });
+function LoginComponent() {
+  const location = useLocation();
+  const navigate = useNavigate();
 
-  sessionStorage.setItem("@token", JSON.stringify(result));
-  window.location.assign("/app");
-};
+  const [load, setload] = useState(false);
 
-const onFinishFailed: FormProps<User>["onFinishFailed"] = (errorInfo) => {
-  console.log("Failed:", errorInfo);
-};
+  const onFinish: FormProps<User>["onFinish"] = async (values: User) => {
+    setload(true);
+    const params = new URLSearchParams(location.search);
+    const from = params.get("from") || "/";
 
-const LoginComponent: React.FC = () => (
-  <Form
-    name="basic"
-    labelCol={{ span: 8 }}
-    wrapperCol={{ span: 16 }}
-    style={{ maxWidth: 600 }}
-    // initialValues={{ remember: true }}
-    onFinish={onFinish}
-    onFinishFailed={onFinishFailed}
-    autoComplete="off"
-  >
-    <Form.Item<User>
-      label="Usuário"
-      name="usuario"
-      rules={[{ required: true, message: "Insira um Usuário!" }]}
+    try {
+      await fakeAuthProvider.signin(values.usuario);
+      navigate(from);
+    } catch (error) {
+      return {
+        error: "Invalid login attempt",
+      };
+    } finally {
+      setload(false);
+    }
+  };
+  return (
+    <Form
+      name="basic"
+      labelCol={{ span: 8 }}
+      wrapperCol={{ span: 16 }}
+      style={{ maxWidth: 600 }}
+      onFinish={onFinish}
+      autoComplete="off"
     >
-      <Input />
-    </Form.Item>
+      <Form.Item<User>
+        label="Usuário"
+        name="usuario"
+        rules={[{ required: true, message: "Insira um Usuário!" }]}
+      >
+        <Input />
+      </Form.Item>
 
-    <Form.Item<User>
-      label="Senha"
-      name="senha"
-      rules={[{ required: true, message: "Insira uma senha!" }]}
-    >
-      <Input.Password />
-    </Form.Item>
+      <Form.Item<User>
+        label="Senha"
+        name="senha"
+        rules={[{ required: true, message: "Insira uma senha!" }]}
+      >
+        <Input.Password />
+      </Form.Item>
 
-    <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
-      <Button type="primary" htmlType="submit">
-        Submit
-      </Button>
-    </Form.Item>
-  </Form>
-);
+      <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
+        <Button type="primary" htmlType="submit" loading={load}>
+          Entrar
+        </Button>
+      </Form.Item>
+    </Form>
+  );
+}
 
 export default LoginComponent;
