@@ -1,0 +1,25 @@
+.main {
+  /* background-color: #3f6128; */
+  border: solid var(--main-bg-color) 2px;
+  border-radius: 25px;
+  min-width: 50%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 10vh 0;
+  gap: 1.5rem;
+}
+
+.form-item {
+  /* background-color: #923838; */
+  min-width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  padding: 0;
+  margin: 0;
+}
+
+.input-main {
+  width: 100%;
+}

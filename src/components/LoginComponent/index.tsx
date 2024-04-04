@@ -1,8 +1,9 @@
 import { useState } from "react";
 import { Button, Form, type FormProps, Input } from "antd";
-import { User } from "../interfaces/login.interface";
 import { useLocation, useNavigate } from "react-router-dom";
-import { fakeAuthProvider } from "../auth";
+import { User } from "../../interfaces/login.interface";
+import { fakeAuthProvider } from "../../auth";
+import "./style.css";
 
 function LoginComponent() {
   const location = useLocation();
@@ -13,7 +14,7 @@ function LoginComponent() {
   const onFinish: FormProps<User>["onFinish"] = async (values: User) => {
     setload(true);
     const params = new URLSearchParams(location.search);
-    const from = params.get("from") || "/";
+    const from = params.get("from") || "/home";
 
     try {
       await fakeAuthProvider.signin(values.usuario);
@@ -31,27 +32,29 @@ function LoginComponent() {
       name="basic"
       labelCol={{ span: 8 }}
       wrapperCol={{ span: 16 }}
-      style={{ maxWidth: 600 }}
       onFinish={onFinish}
       autoComplete="off"
+      className="main"
     >
       <Form.Item<User>
         label="Usuário"
+        className="form-item"
         name="usuario"
         rules={[{ required: true, message: "Insira um Usuário!" }]}
       >
-        <Input />
+        <Input className="input-main" />
       </Form.Item>
 
       <Form.Item<User>
         label="Senha"
+        className="form-item"
         name="senha"
         rules={[{ required: true, message: "Insira uma senha!" }]}
       >
-        <Input.Password />
+        <Input.Password className="input-main" />
       </Form.Item>
 
-      <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
+      <Form.Item wrapperCol={{ offset: 8, span: 16 }} className="form-item">
         <Button type="primary" htmlType="submit" loading={load}>
           Entrar
         </Button>

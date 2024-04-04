@@ -1,3 +1,7 @@
+:root {
+  --main-bg-color: #344463;
+}
+
 .App {
   text-align: center;
 }
@@ -14,7 +18,7 @@
 }
 
 .App-header {
-  background-color: #282c34;
+  background-color: var(--main-bg-color);
   height: 10vh;
   display: flex;
   flex-direction: row;
@@ -22,17 +26,18 @@
   justify-content: end;
   gap: 10px;
   color: white;
+  font-weight: 600;
+  padding: 0 2rem;
 }
 
 .App-link {
   color: #61dafb;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.App-body {
+  padding: 2vh 2vw;
+  /* background-color: #352c2c; */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
