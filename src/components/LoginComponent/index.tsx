@@ -2,8 +2,8 @@ import { useState } from "react";
 import { Button, Form, type FormProps, Input } from "antd";
 import { useLocation, useNavigate } from "react-router-dom";
 import { User } from "../../interfaces/login.interface";
-import { fakeAuthProvider } from "../../auth";
 import "./style.css";
+import { authProvider } from "../../contexts/auth.context";
 
 function LoginComponent() {
   const location = useLocation();
@@ -17,7 +17,7 @@ function LoginComponent() {
     const from = params.get("from") || "/home";
 
     try {
-      await fakeAuthProvider.signin(values.usuario);
+      await authProvider.signin(values);
       navigate(from);
     } catch (error) {
       return {
