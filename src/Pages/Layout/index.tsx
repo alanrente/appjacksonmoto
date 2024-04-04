@@ -2,7 +2,7 @@ import { Outlet, useNavigate } from "react-router-dom";
 import { authProvider } from "../../contexts/auth.context";
 import { Button, Divider, Space } from "antd";
 import {
-  infosRouter,
+  infosRouteDefault,
   infosRouterChildren,
   router,
 } from "../../routes/browserRouter.route";
@@ -27,7 +27,9 @@ export function Layout() {
       >
         {isAuthenticated &&
           router.routes
-            .find((router) => router.id === infosRouter[ERouteObject.root].id)
+            .find(
+              (router) => router.id === infosRouteDefault[ERouteObject.root].id
+            )
             ?.children?.filter(
               (r) => r.id !== infosRouterChildren[ERouteObject.index].id
             )

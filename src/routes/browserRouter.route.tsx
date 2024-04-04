@@ -33,7 +33,7 @@ export const infosRouterChildren: IRouteObject = {
   },
 };
 
-export const infosRouter: IRouteObject = {
+export const infosRouteDefault: IRouteObject = {
   [ERouteObject.root]: {
     id: "root",
     path: "/",
@@ -48,4 +48,6 @@ export const infosRouter: IRouteObject = {
   },
 };
 
-export const router = createBrowserRouter([infosRouter[ERouteObject.root]]);
+export const router = createBrowserRouter([
+  infosRouteDefault[ERouteObject.root],
+]);
