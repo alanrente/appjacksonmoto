@@ -8,6 +8,19 @@ import { HomePage } from "../Pages/HomePage";
 import { ServicosPage } from "../Pages/HomePage/ServicosPage";
 import { IRouteObject, ERouteObject } from "../interfaces/router.interface";
 
+function validateInfosChildren(children: IRouteObject) {
+  const keysChildren = Object.keys(children);
+  const keysEnum = Object.values(ERouteObject).map((obj) => obj.toString());
+
+  keysChildren.forEach((children) => {
+    const hasDiff = !keysEnum.includes(children);
+    console.log({ hasDiff, children });
+    if (hasDiff) {
+      throw new Error(`Rota "${children}" não entrada no enum de rotas`);
+    }
+  });
+}
+
 export const infosRouterChildren: IRouteObject = {
   [ERouteObject.index]: {
     id: "index",
@@ -31,17 +44,10 @@ export const infosRouterChildren: IRouteObject = {
     loader: protectedLoader,
     Component: ServicosPage,
   },
+  cadastro: {},
 };
 
-const keysChildren = Object.keys(infosRouterChildren);
-const keysEnum = Object.values(ERouteObject).map((obj) => obj.toString());
-
-keysChildren.forEach((children) => {
-  const hasDiff = !keysEnum.includes(children);
-  if (hasDiff) {
-    throw new Error(`Rota "${children}" não entrada no enum de rotas`);
-  }
-});
+validateInfosChildren(infosRouterChildren);
 
 export const infosRouteDefault: IRouteObject = {
   [ERouteObject.root]: {
