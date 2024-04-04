@@ -33,6 +33,16 @@ export const infosRouterChildren: IRouteObject = {
   },
 };
 
+const keysChildren = Object.keys(infosRouterChildren);
+const keysEnum = Object.values(ERouteObject).map((obj) => obj.toString());
+
+keysChildren.forEach((children) => {
+  const hasDiff = !keysEnum.includes(children);
+  if (hasDiff) {
+    throw new Error(`Rota "${children}" não entrada no enum de rotas`);
+  }
+});
+
 export const infosRouteDefault: IRouteObject = {
   [ERouteObject.root]: {
     id: "root",
