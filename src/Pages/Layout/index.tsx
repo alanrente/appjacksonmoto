@@ -1,8 +1,13 @@
 import { Outlet, useNavigate } from "react-router-dom";
 import { authProvider } from "../../contexts/auth.context";
 import { Button, Divider, Space } from "antd";
-import { router } from "../../routes/browserRouter.route";
+import {
+  infosRouter,
+  infosRouterChildren,
+  router,
+} from "../../routes/browserRouter.route";
 import { LogoutComponent } from "../../components/LogoutComponent";
+import { ERouteObject } from "../../interfaces/router.interface";
 
 export function Layout() {
   const { isAuthenticated } = authProvider;
@@ -22,10 +27,12 @@ export function Layout() {
       >
         {isAuthenticated &&
           router.routes
-            .find((router) => router.id === "root")
-            ?.children?.filter((r) => r.path && r.path !== "/")
+            .find((router) => router.id === infosRouter[ERouteObject.root].id)
+            ?.children?.filter(
+              (r) => r.id !== infosRouterChildren[ERouteObject.index].id
+            )
             .map((route) =>
-              route.id === "Sair" ? (
+              route.id === infosRouterChildren[ERouteObject.sair].id ? (
                 <LogoutComponent key={route.id} />
               ) : (
                 <Button

@@ -4,6 +4,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { User } from "../../interfaces/login.interface";
 import "./style.css";
 import { authProvider } from "../../contexts/auth.context";
+import { ERouteObject } from "../../interfaces/router.interface";
 
 function LoginComponent() {
   const location = useLocation();
@@ -14,7 +15,7 @@ function LoginComponent() {
   const onFinish: FormProps<User>["onFinish"] = async (values: User) => {
     setload(true);
     const params = new URLSearchParams(location.search);
-    const from = params.get("from") || "/home";
+    const from = params.get("from") || `/${ERouteObject.home}`;
 
     try {
       await authProvider.signin(values);
