@@ -8,6 +8,10 @@ export enum ERouteObject {
   index = "index",
 }
 
-export interface IRouteObject {
-  [key: string]: RouteObject;
-}
+type IRouteObjectUnprotected = {
+  unprotected?: boolean;
+};
+
+export type IRouteObject = {
+  [key: string]: RouteObject & IRouteObjectUnprotected;
+};

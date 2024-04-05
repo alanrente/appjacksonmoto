@@ -14,7 +14,7 @@ function validateInfosChildren(children: IRouteObject) {
 
   keysChildren.forEach((children) => {
     const hasDiff = !keysEnum.includes(children);
-    console.log({ hasDiff, children });
+
     if (hasDiff) {
       throw new Error(`Rota "${children}" não entrada no enum de rotas`);
     }
@@ -27,22 +27,22 @@ export const infosRouterChildren: IRouteObject = {
     index: true,
     Component: LoginComponent,
   },
-  [ERouteObject.sair]: {
-    id: "Sair",
-    path: "logout",
-    Component: LogoutComponent,
-  },
   [ERouteObject.home]: {
     id: "Home",
     path: "home",
-    loader: protectedLoader,
-    Component: HomePage,
+    element: <HomePage />,
+    unprotected: true,
   },
   [ERouteObject.servicos]: {
     id: "Serviços",
     path: "servicos",
     loader: protectedLoader,
-    Component: ServicosPage,
+    element: <ServicosPage />,
+  },
+  [ERouteObject.sair]: {
+    id: "Sair",
+    path: "logout",
+    Component: LogoutComponent,
   },
 };
 

@@ -33,8 +33,9 @@ export function Layout() {
             ?.children?.filter(
               (r) => r.id !== infosRouterChildren[ERouteObject.index].id
             )
-            .map((route) =>
-              route.id === infosRouterChildren[ERouteObject.sair].id ? (
+            .map((route) => {
+              console.log(route);
+              return route.id === infosRouterChildren[ERouteObject.sair].id ? (
                 <LogoutComponent key={route.id} />
               ) : (
                 <Button
@@ -45,8 +46,8 @@ export function Layout() {
                 >
                   {route.id}
                 </Button>
-              )
-            )}
+              );
+            })}
       </Space>
 
       <Divider style={{ margin: "1vh 0" }} />
