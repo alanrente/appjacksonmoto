@@ -44,7 +44,6 @@ export const infosRouterChildren: IRouteObject = {
     loader: protectedLoader,
     Component: ServicosPage,
   },
-  cadastro: {},
 };
 
 validateInfosChildren(infosRouterChildren);
