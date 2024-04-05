@@ -31,7 +31,7 @@ export const infosRouterChildren: IRouteObject = {
     id: "Home",
     path: "home",
     element: <HomePage />,
-    unprotected: true,
+    loader: protectedLoader,
   },
   [ERouteObject.servicos]: {
     id: "Serviços",
@@ -42,7 +42,6 @@ export const infosRouterChildren: IRouteObject = {
   [ERouteObject.sair]: {
     id: "Sair",
     path: "logout",
-    Component: LogoutComponent,
   },
 };
 

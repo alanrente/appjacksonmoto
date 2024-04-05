@@ -34,7 +34,6 @@ export function Layout() {
               (r) => r.id !== infosRouterChildren[ERouteObject.index].id
             )
             .map((route) => {
-              console.log(route);
               return route.id === infosRouterChildren[ERouteObject.sair].id ? (
                 <LogoutComponent key={route.id} />
               ) : (
