@@ -4,21 +4,9 @@ import { Layout } from "../Pages/Layout";
 import LoginComponent from "../components/LoginComponent";
 import { protectedLoader } from "../contexts/protectedLoader.context";
 import { HomePage } from "../Pages/HomePage";
-import { ServicosPage } from "../Pages/HomePage/ServicosPage";
+import { ServicosPage } from "../Pages/ServicosPage";
 import { IRouteObject, ERouteObject } from "../interfaces/router.interface";
-
-function validateInfosChildren(children: IRouteObject) {
-  const keysChildren = Object.keys(children);
-  const keysEnum = Object.values(ERouteObject).map((obj) => obj.toString());
-
-  keysChildren.forEach((children) => {
-    const hasDiff = !keysEnum.includes(children);
-
-    if (hasDiff) {
-      throw new Error(`Rota "${children}" não entrada no enum de rotas`);
-    }
-  });
-}
+import validateInfosChildren from "../utils/validateInfosChildren.util";
 
 export const infosRouterChildren: IRouteObject = {
   [ERouteObject.index]: {
