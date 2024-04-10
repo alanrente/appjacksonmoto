@@ -55,8 +55,14 @@ function LoginComponent() {
         <Input.Password className="input-main" />
       </Form.Item>
 
-      <Form.Item wrapperCol={{ offset: 8, span: 16 }} className="form-item">
-        <Button type="primary" htmlType="submit" loading={load}>
+      <Form.Item className="form-item">
+        <Button
+          type="primary"
+          htmlType="submit"
+          loading={load}
+          size="large"
+          className="form-button"
+        >
           Entrar
         </Button>
       </Form.Item>
