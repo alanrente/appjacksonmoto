@@ -3,23 +3,35 @@
   border: solid var(--main-bg-color) 2px;
   border-radius: 25px;
   min-width: 50%;
+  height: 45vh;
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 10vh 0;
+  padding: 2%;
   gap: 1.5rem;
 }
 
 .form-item {
   /* background-color: #923838; */
-  min-width: 100%;
+  /* width: 50%; */
   display: flex;
   flex-direction: row;
   justify-content: center;
-  padding: 0;
-  margin: 0;
+}
+
+.form-item,
+label {
+  font-size: 3vh !important;
+  font-weight: 600;
+  width: 85%;
+}
+
+.form-button {
+  background-color: var(--main-bg-color);
+  min-width: 150px;
 }
 
 .input-main {
-  width: 100%;
+  font-size: 3vh;
+  height: 6vh;
 }
