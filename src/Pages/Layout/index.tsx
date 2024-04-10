@@ -19,7 +19,7 @@ export function Layout() {
 
       <Space
         style={{
-          margin: "1vh 0",
+          margin: "1vh 1vw",
           display: "flex",
           flexDirection: "row",
           justifyContent: "start",
@@ -39,11 +39,15 @@ export function Layout() {
               ) : (
                 <Button
                   key={route.id}
+                  style={{
+                    width: "100px",
+                    padding: "0",
+                  }}
                   onClick={() => {
                     navigate(`/${route.path}`);
                   }}
                 >
-                  {route.id}
+                  {`${route.id}`.substring(0, 10)}
                 </Button>
               );
             })}

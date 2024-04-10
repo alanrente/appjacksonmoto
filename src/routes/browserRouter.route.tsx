@@ -7,6 +7,7 @@ import { HomePage } from "../Pages/HomePage";
 import { ServicosPage } from "../Pages/ServicosPage";
 import { IRouteObject, ERouteObject } from "../interfaces/router.interface";
 import validateInfosChildren from "../utils/validateInfosChildren.util";
+import { OsPage } from "../Pages/OsPage";
 
 export const infosRouterChildren: IRouteObject = {
   [ERouteObject.index]: {
@@ -19,6 +20,12 @@ export const infosRouterChildren: IRouteObject = {
     path: "home",
     element: <HomePage />,
     loader: protectedLoader,
+  },
+  [ERouteObject.os]: {
+    id: "OS's",
+    path: ERouteObject.os,
+    loader: protectedLoader,
+    element: <OsPage />,
   },
   [ERouteObject.servicos]: {
     id: "Serviços",
