@@ -1,0 +1,26 @@
+.card-servico {
+  display: flex;
+  height: 70px;
+  flex-direction: row;
+  gap: 0.5rem;
+  margin: 0.5rem;
+  padding: 1rem;
+
+  background-color: #b8b8b8;
+}
+
+.card-servico__valores {
+  display: flex;
+  flex-direction: column;
+  background-color: #9c9c9c;
+  text-transform: uppercase;
+  justify-content: space-between;
+  width: 100%;
+}
+.card-servico__botoes {
+  display: flex;
+  background-color: #8d2b2b;
+  height: auto;
+  width: 100%;
+  justify-content: space-between;
+}
