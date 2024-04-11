@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react";
 import { getAllOs } from "../../services/os.service";
 import { Servico } from "../../interfaces/servico.interface";
-import { Table, TableColumnsType } from "antd";
+import { Table } from "antd";
 import { ColumnsType } from "antd/es/table";
 
 export function useOsPage() {
   const [ordensServico, setordensServico] = useState<any[]>([]);
-  const [ordemColumns, setordemColumns] = useState<any[]>([]);
+  const [ordemColumns, setordemColumns] = useState<string[]>([]);
   const [excludeColumn] = useState([
     "createdAt",
     "updatedAt",
@@ -28,14 +28,19 @@ export function useOsPage() {
     const columnstableServicos: ColumnsType<Servico> = keysFirstItemServico
       .filter((key) => !excludeColumn.includes(key))
       .map((key) => {
-        return { key, title: key, dataIndex: key };
+        const colum = key.includes("id") ? key.substring(0, 2) : key;
+        return { key: colum, title: colum, dataIndex: colum };
       });
 
     return (
       <Table
         columns={columnstableServicos}
-        dataSource={ordemExpanded}
+        dataSource={ordemExpanded.map((ordem) => ({
+          id: ordem.idServico,
+          ...ordem,
+        }))}
         pagination={false}
+        size="small"
       />
     );
   }
