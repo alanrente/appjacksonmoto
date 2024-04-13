@@ -1,0 +1,16 @@
+.skeleton-antd {
+  margin: 0;
+}
+
+.skeleton-antd ul {
+  height: calc(100vh - 42vh) !important;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.skeleton-antd li {
+  height: 9rem !important ;
+  width: 80% !important;
+}
