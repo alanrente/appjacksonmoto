@@ -7,9 +7,10 @@
 .App {
   display: flex;
   flex-direction: row;
+  justify-content: center;
   height: 100%;
   /* background-color: #daaaaa; */
   position: fixed;
-  /* background-color: var(--main-bg-color); */
+  background-color: var(--main-bg-color);
   width: 100%;
 }

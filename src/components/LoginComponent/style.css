@@ -1,8 +1,9 @@
 .main {
-  border: solid var(--secundary-bg-color) 2px;
+  border: solid var(--secundary-bg-color) 3px;
   border-radius: 25px;
   margin-top: 20%;
   height: 45vh;
+  width: 80%;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -17,8 +18,8 @@
   justify-content: center;
 }
 
-.form-item,
-label {
+.form-item label {
+  color: var(--font-white-color) !important;
   font-size: 3vh !important;
   font-weight: 600;
   width: 85%;
@@ -27,6 +28,7 @@ label {
 .form-button {
   background-color: var(--secundary-bg-color);
   min-width: 150px;
+  font-weight: 600;
 }
 
 .input-main {

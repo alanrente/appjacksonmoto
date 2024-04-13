@@ -10,7 +10,7 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 3rem 0;
+  padding: 4rem 0;
   position: absolute;
 }
 
@@ -53,7 +53,7 @@
 .App-body {
   padding: 10% 0;
   width: 100%;
-  background-color: #352c2c;
+  /* background-color: #352c2c; */
   display: flex;
   flex-direction: column;
   align-items: center;
