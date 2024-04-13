@@ -1,12 +1,9 @@
 import { useEffect, useState } from "react";
 import { getAllOs } from "../../services/os.service";
-import { Servico } from "../../interfaces/servico.interface";
-import { Table } from "antd";
-import { ColumnsType } from "antd/es/table";
+import { IOrdemServico } from "../../interfaces/servico.interface";
 
 export function useOsPage() {
-  const [ordensServico, setordensServico] = useState<any[]>([]);
-  const [ordemColumns, setordemColumns] = useState<string[]>([]);
+  const [ordensServico, setordensServico] = useState<IOrdemServico[]>([]);
   const [excludeColumn] = useState([
     "createdAt",
     "updatedAt",
@@ -22,34 +19,10 @@ export function useOsPage() {
     );
   }
 
-  function expandedRender(args: any) {
-    const ordemExpanded = ordensServico[args.key].servicos as Servico[];
-    const keysFirstItemServico = Object.keys(ordemExpanded[0]);
-    const columnstableServicos: ColumnsType<Servico> = keysFirstItemServico
-      .filter((key) => !excludeColumn.includes(key))
-      .map((key) => {
-        const colum = key.includes("id") ? key.substring(0, 2) : key;
-        return { key: colum, title: colum, dataIndex: colum };
-      });
-
-    return (
-      <Table
-        columns={columnstableServicos}
-        dataSource={ordemExpanded.map((ordem) => ({
-          id: ordem.idServico,
-          ...ordem,
-        }))}
-        pagination={false}
-        size="small"
-      />
-    );
-  }
-
   async function handleGetAllOS() {
     const ordens = await getAllOs();
 
     setordensServico(ordens);
-    setordemColumns(Object.keys(ordens[0]));
   }
 
   useEffect(() => {
@@ -60,7 +33,5 @@ export function useOsPage() {
     ordensServico,
     excludeColumn,
     handleGetValor,
-    ordemColumns,
-    expandedRender,
   };
 }

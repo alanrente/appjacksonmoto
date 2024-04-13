@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
 import { getAllServicos } from "../../services/servicos.service";
-import { Servico } from "../../interfaces/servico.interface";
+import { IServico } from "../../interfaces/servico.interface";
 
 export function useServicosPage() {
-  const [servicos, setservicos] = useState<Servico[]>([]);
+  const [servicos, setservicos] = useState<IServico[]>([]);
 
   async function handleGetServicos() {
     const listServicos = await getAllServicos();
