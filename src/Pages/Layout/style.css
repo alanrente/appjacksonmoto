@@ -12,6 +12,8 @@
   justify-content: center;
   padding: 4rem 0;
   position: absolute;
+  z-index: 999;
+  box-shadow: 5px 5px 50px 5px;
 }
 
 .App-sider__buttons {
@@ -51,7 +53,7 @@
 }
 
 .App-body {
-  padding: 10% 0;
+  padding: 10% 0 0 0;
   width: 100%;
   /* background-color: #352c2c; */
   display: flex;

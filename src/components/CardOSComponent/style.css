@@ -1,8 +1,12 @@
 .card-os {
-  width: 80%;
-  background-color: #534f4f;
-  color: #fff;
-  min-height: 4rem;
+  width: 90%;
+  background-color: var(--main-bg-color);
+  color: var(--font-white-color);
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  min-height: 5rem;
+  /* justify-content: space-between; */
   border-radius: var(--border-radius-s);
   padding: 2px 4px;
 }
@@ -11,11 +15,27 @@
   margin: 4px;
 }
 
+.card-os__buttons {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
 .card-os__button {
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: space-around;
   width: 60px;
+  height: 28px;
   padding: 0 6px;
+  svg {
+    width: 20px;
+    height: 20px;
+  }
+}
+
+.card-os__invisible {
+  display: none;
 }

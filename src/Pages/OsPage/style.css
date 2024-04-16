@@ -15,7 +15,7 @@ th {
 } */
 
 .ospage-main {
-  background-color: #dddddd;
+  /* background-color: #dddddd; */
   width: 80%;
   display: flex;
   flex-direction: column;

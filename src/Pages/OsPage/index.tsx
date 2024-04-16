@@ -11,7 +11,6 @@ export function OsPage() {
         ordensServico.map((os, i) => (
           <>
             <CardOSComponent os={os} key={i.toString()} />
-            <CardOSComponent os={os} key={i.toString()} />
           </>
         ))}
     </div>
