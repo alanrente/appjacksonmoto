@@ -1,20 +1,39 @@
 .sum-servicos__servico {
-  width: 90%;
+  margin-top: 1.5rem;
   display: flex;
-  flex-wrap: wrap;
   flex-direction: column;
   align-items: end;
-  justify-content: flex-end;
+  /* gap: 1.5rem; */
+  justify-content: center;
+  text-transform: capitalize;
 }
 
-.sum-servicos__servico > div {
-  /* background-color: #667a54; */
+.sum-servicos__conteudo {
+  /* background-color: #95dd56; */
   display: flex;
   flex-direction: row;
   align-items: center;
-  gap: 6px;
+  gap: 1rem;
+  margin: 1rem 0;
+
+  svg {
+    width: 2.5rem;
+    margin: 0;
+    height: 2.5rem;
+  }
 }
+
 .sum-servicos__divider {
   background-color: #fff;
-  margin: 0.5rem 0;
+  margin: 0;
+}
+
+.sum-servicos__span {
+  /* background-color: #667a54; */
+  margin: 0 0.25rem;
+}
+
+.sum-servicos__soma {
+  margin-right: 26px;
+  font-weight: 800;
 }

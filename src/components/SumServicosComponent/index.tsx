@@ -31,14 +31,12 @@ export function SumServicosComponent({ servicos, args, show }: IProps) {
       <Divider type="horizontal" prefixCls="sum-servicos__divider" />
       {servicos.map((serv) => {
         return (
-          <div>
+          <div className="sum-servicos__conteudo">
             <MdEdit />
-            <div>
-              <span className="sum-servicos__span">
-                {`${serv.servico}`.slice(0, 35)}
-              </span>
-              <span className="sum-servicos__span">{serv.osServico.valor}</span>
-            </div>
+            <span className="sum-servicos__span">
+              {`${serv.servico}`.slice(0, 35)}
+            </span>
+            <span className="sum-servicos__span">{serv.osServico.valor}</span>
             <MdDelete onClick={() => handleDelete(serv)} />
           </div>
         );
