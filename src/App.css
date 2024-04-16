@@ -2,6 +2,11 @@
   --main-bg-color: #344463;
   --secundary-bg-color: #189fdd;
   --font-white-color: #fff;
+
+  /* borders */
+  --border-radius-s: 5px;
+  --border-radius-m: 10px;
+  --border-radius-l: 20px;
 }
 
 .App {

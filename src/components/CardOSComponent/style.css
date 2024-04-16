@@ -1,6 +1,21 @@
-.card-os-component {
-  width: 90%;
+.card-os {
+  width: 80%;
   background-color: #534f4f;
   color: #fff;
-  margin: 2rem;
+  min-height: 4rem;
+  border-radius: var(--border-radius-s);
+  padding: 2px 4px;
+}
+
+.card-os__mecanico {
+  margin: 4px;
+}
+
+.card-os__button {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-around;
+  width: 60px;
+  padding: 0 6px;
 }

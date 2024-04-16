@@ -24,12 +24,15 @@ export function Layout() {
   return (
     <>
       {!serverIsOnline ? (
-        <Skeleton
-          active
-          prefixCls="skeleton-antd"
-          paragraph={{ rows: 3 }}
-          title={{ width: "100%", style: { height: "20vh", marginTop: 0 } }}
-        />
+        <>
+          Carregando sistema...
+          <Skeleton
+            active
+            prefixCls="skeleton-antd"
+            paragraph={{ rows: 3 }}
+            title={{ width: "100%", style: { height: "20vh", marginTop: 0 } }}
+          />
+        </>
       ) : (
         <div className="App">
           {!isAuthenticated ? (

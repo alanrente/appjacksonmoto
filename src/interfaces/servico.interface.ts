@@ -1,7 +1,14 @@
+export interface IOsServico {
+  valor: number | string;
+  ServicoId: number;
+  OrdemServicoId: number;
+}
+
 export interface IServico {
   idServico: number;
   servico: string;
   valor: number;
+  osServico: IOsServico;
 }
 
 export interface IMecanico {

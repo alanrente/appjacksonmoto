@@ -6,7 +6,7 @@ export function OsPage() {
   const { ordensServico, excludeColumn, handleGetValor } = useOsPage();
 
   return (
-    <div>
+    <div className="ospage-main">
       {ordensServico.length > 0 &&
         ordensServico.map((os, i) => (
           <>
