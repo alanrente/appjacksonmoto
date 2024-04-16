@@ -1,29 +1,25 @@
-/* .ordens {
-  margin-top: 1rem;
-  background-color: hsl(0, 9%, 50%);
-  padding: 1rem;
-  height: 50vh;
-}
-
-.ordens > div {
-  overflow: scroll;
-  height: 90%;
-}
-
-th {
-  text-transform: capitalize;
-} */
-
 .ospage-main {
-  /* background-color: #dddddd; */
-  width: 80%;
+  background-color: #dddddd;
+  width: 85%;
+  height: 90%;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 2rem;
-  justify-content: space-evenly;
+  justify-content: space-around;
 }
 
-/* 
-tr:nth-child(even) {
-} */
+.ospage-cards {
+  /* background-color: #67737e; */
+  width: 95%;
+  overflow-y: scroll;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 90%;
+}
+
+.ospage-novo {
+  width: 100%;
+  height: 10%;
+  box-shadow: 0 30px 20px 5px #888888;
+}

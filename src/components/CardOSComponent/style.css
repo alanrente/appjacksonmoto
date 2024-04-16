@@ -1,14 +1,12 @@
 .card-os {
   width: 100%;
+  margin: 10px 0;
   background-color: var(--main-bg-color);
   color: var(--font-white-color);
   display: flex;
   flex-direction: column;
   gap: 0.85rem;
-  min-height: 5rem;
-  /* justify-content: space-between; */
   border-radius: var(--border-radius-s);
-  padding: 2px 4px;
 }
 
 .card-os__mecanico {
@@ -20,6 +18,7 @@
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
+  margin: 0 10px;
 }
 
 .card-os__button {
