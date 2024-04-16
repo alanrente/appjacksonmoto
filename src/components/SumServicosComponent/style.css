@@ -28,12 +28,7 @@
   margin: 0;
 }
 
-.sum-servicos__span {
-  /* background-color: #667a54; */
-  margin: 0 0.25rem;
-}
-
 .sum-servicos__soma {
-  margin-right: 26px;
+  margin-right: 4rem;
   font-weight: 800;
 }

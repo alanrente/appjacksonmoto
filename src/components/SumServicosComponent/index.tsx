@@ -33,10 +33,8 @@ export function SumServicosComponent({ servicos, args, show }: IProps) {
         return (
           <div className="sum-servicos__conteudo">
             <MdEdit />
-            <span className="sum-servicos__span">
-              {`${serv.servico}`.slice(0, 35)}
-            </span>
-            <span className="sum-servicos__span">{serv.osServico.valor}</span>
+            <span>{`${serv.servico}`.slice(0, 35)}</span>
+            <span>{serv.osServico.valor}</span>
             <MdDelete onClick={() => handleDelete(serv)} />
           </div>
         );
