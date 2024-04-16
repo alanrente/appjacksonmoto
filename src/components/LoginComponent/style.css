@@ -1,18 +1,19 @@
 .main {
   border: solid var(--secundary-bg-color) 3px;
   border-radius: 25px;
-  margin-top: 20%;
-  height: 45vh;
+  margin-top: 10%;
+  height: 65%;
   width: 80%;
+  max-width: 450px;
   display: flex;
   flex-direction: column;
   align-items: center;
   padding: 2%;
-  gap: 1.5rem;
+  gap: 1rem;
+  /* background-color: #923838; */
 }
 
 .form-item {
-  /* background-color: #923838; */
   display: flex;
   flex-direction: row;
   justify-content: center;
@@ -20,18 +21,18 @@
 
 .form-item label {
   color: var(--font-white-color) !important;
-  font-size: 3vh !important;
+  font-size: 1.2rem !important;
   font-weight: 600;
   width: 85%;
 }
 
 .form-button {
   background-color: var(--secundary-bg-color);
-  min-width: 150px;
+  min-width: 180px;
   font-weight: 600;
 }
 
 .input-main {
-  font-size: 3vh;
+  font-size: 1.2rem;
   height: 6vh;
 }

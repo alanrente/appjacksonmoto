@@ -2,7 +2,6 @@ import "./style.css";
 import { IServico } from "../../interfaces/servico.interface";
 import { Divider } from "antd";
 import { MdDelete, MdEdit } from "react-icons/md";
-import { useState } from "react";
 
 interface IProps {
   servicos: IServico[];
@@ -11,8 +10,6 @@ interface IProps {
 }
 
 export function SumServicosComponent({ servicos, args, show }: IProps) {
-  // const [visible, setvisible] = useState(show);
-
   return (
     <div
       className="sum-servicos__servico"
