@@ -2,7 +2,7 @@ import { useOsPage } from "./index.hook";
 import { CardOSComponent } from "../../components/CardOSComponent/index.component";
 import { ScrollContainerWithButton } from "../../components/ScrollContainerWithButton";
 import { Fragment } from "react/jsx-runtime";
-import { Button, Form, FormInstance, Input, Modal } from "antd";
+import { AutoComplete, Button, Form, FormInstance, Input, Modal } from "antd";
 import { FC, useEffect, useState } from "react";
 import { useForm } from "antd/es/form/Form";
 
@@ -17,13 +17,15 @@ interface CollectionForm {
   onFormInstanceReady: (instance: FormInstance<Values>) => void;
   onFinish: (e: any) => void;
   onCancel: (e: any) => void;
+  valuesAutocomplete?: { value: string }[];
 }
 
-const CollectionCreateForm: FC<CollectionForm> = ({
+const CreateFormOs: FC<CollectionForm> = ({
   initialValues,
   onFormInstanceReady,
   onFinish,
   onCancel,
+  valuesAutocomplete,
 }) => {
   const [form] = useForm();
 
@@ -39,7 +41,12 @@ const CollectionCreateForm: FC<CollectionForm> = ({
       size="middle"
     >
       <Form.Item label="Mecanico" name={"mecanico"}>
-        <Input type="number" />
+        <AutoComplete
+          options={valuesAutocomplete}
+          filterOption={(inputValue, option) =>
+            option!.value.toUpperCase().indexOf(inputValue.toUpperCase()) !== -1
+          }
+        />
       </Form.Item>
       <Form.Item label="Cliente" name={"cliente"}>
         <Input />
@@ -69,7 +76,7 @@ const CollectionCreateForm: FC<CollectionForm> = ({
   );
 };
 export function OsPage() {
-  const { ordensServico, setvisible, visible } = useOsPage();
+  const { ordensServico, setvisible, visible, mecanicos } = useOsPage();
 
   const [forminstance, setforminstance] = useState<FormInstance>();
 
@@ -98,8 +105,9 @@ export function OsPage() {
         okButtonProps={{ style: { display: "none" } }}
         destroyOnClose
       >
-        <CollectionCreateForm
+        <CreateFormOs
           onFinish={handleOk}
+          valuesAutocomplete={mecanicos}
           onCancel={() => setvisible(false)}
           initialValues={{
             cliente: "",
