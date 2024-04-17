@@ -74,6 +74,7 @@ export function OsPage() {
   const [forminstance, setforminstance] = useState<FormInstance>();
 
   function handleOk(e: any) {
+    forminstance?.resetFields();
     console.log(e);
     setvisible(false);
   }
@@ -96,15 +97,6 @@ export function OsPage() {
         cancelButtonProps={{ style: { display: "none" } }}
         okButtonProps={{ style: { display: "none" } }}
         destroyOnClose
-        // onOk={async () => {
-        //   try {
-        //     const values = await forminstance?.validateFields();
-        //     forminstance?.resetFields();
-        //     handleOk(values);
-        //   } catch (error) {
-        //     console.log(error);
-        //   }
-        // }}
       >
         <CollectionCreateForm
           onFinish={handleOk}
