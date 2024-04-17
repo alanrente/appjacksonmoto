@@ -29,9 +29,9 @@ export function SumServicosComponent({ servicos, args, show }: IProps) {
       style={{ display: show ? "" : "none" }}
     >
       <Divider type="horizontal" prefixCls="sum-servicos__divider" />
-      {servicos.map((serv) => {
+      {servicos.map((serv, i) => {
         return (
-          <div className="sum-servicos__conteudo">
+          <div key={i.toString()} className="sum-servicos__conteudo">
             <MdEdit />
             <span>{`${serv.servico}`.slice(0, 35)}</span>
             <span>{serv.osServico.valor}</span>

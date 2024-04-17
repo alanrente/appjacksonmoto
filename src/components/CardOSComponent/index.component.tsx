@@ -32,5 +32,3 @@ export function CardOSComponent({ os }: { os: IOrdemServico }) {
     </div>
   );
 }
-// trocar caixa de direção5555555-555555555
-// troca de oleo com filtro5555555-55555555
