@@ -5,10 +5,11 @@ import { Fragment } from "react/jsx-runtime";
 import { AutoComplete, Button, Form, FormInstance, Input, Modal } from "antd";
 import { FC, useEffect, useState } from "react";
 import { useForm } from "antd/es/form/Form";
+import { ICliente, IMecanico } from "../../interfaces/servico.interface";
 
 interface ValuesAutocomplete {
-  mecanicosAutoComplete: { value: string }[];
-  clientesAutoComplete: { value: string }[];
+  mecanicos: IMecanico[];
+  clientes: ICliente[];
 }
 interface Values {
   mecanico: string;
@@ -46,7 +47,9 @@ const CreateFormOs: FC<CollectionForm> = ({
     >
       <Form.Item label="Mecanico" name={"mecanico"}>
         <AutoComplete
-          options={valuesAutocomplete!.mecanicosAutoComplete}
+          options={valuesAutocomplete!.mecanicos.map((mec) => ({
+            value: mec.nome,
+          }))}
           filterOption={(inputValue, option) =>
             option!.value.toUpperCase().indexOf(inputValue.toUpperCase()) !== -1
           }
@@ -54,7 +57,9 @@ const CreateFormOs: FC<CollectionForm> = ({
       </Form.Item>
       <Form.Item label="Cliente" name={"cliente"}>
         <AutoComplete
-          options={valuesAutocomplete!.clientesAutoComplete}
+          options={valuesAutocomplete!.clientes.map((cl) => ({
+            value: cl.nome,
+          }))}
           onSelect={(e) => {
             console.log("onSelect", e);
           }}
