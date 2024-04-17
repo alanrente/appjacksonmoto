@@ -2,35 +2,37 @@ import { useEffect, useState } from "react";
 import { getAllOs } from "../../services/os.service";
 import { IOrdemServico } from "../../interfaces/servico.interface";
 import { getAllMecanicos } from "../../services/mecanicos.service";
+import { getAllClientes } from "../../services/clientes.service";
 
 export function useOsPage() {
   const [ordensServico, setordensServico] = useState<IOrdemServico[]>([]);
-  const [mecanicosAutocomplete, setmecanicosAutocomplete] = useState<
-    { value: string }[]
-  >([]);
+  const [autoComplete, setautoComplete] = useState<{
+    mecanicosAutoComplete: { value: string }[];
+    clientesAutoComplete: { value: string }[];
+  }>({ mecanicosAutoComplete: [], clientesAutoComplete: [] });
+
   const [visible, setvisible] = useState(false);
 
-  async function handleGetAllOS() {
+  async function handleGetAll() {
     const ordens = await getAllOs();
-
     setordensServico(ordens);
-  }
 
-  async function handleMecanicos() {
     const mecanicos = await getAllMecanicos();
-
-    setmecanicosAutocomplete(mecanicos.map((mec) => ({ value: mec.nome })));
+    const clientes = await getAllClientes();
+    setautoComplete({
+      clientesAutoComplete: clientes.map((cl) => ({ value: cl.nome })),
+      mecanicosAutoComplete: mecanicos.map((mec) => ({ value: mec.nome })),
+    });
   }
 
   useEffect(() => {
-    handleGetAllOS();
-    handleMecanicos();
+    handleGetAll();
   }, []);
 
   return {
     ordensServico,
     visible,
     setvisible,
-    mecanicos: mecanicosAutocomplete,
+    autoComplete,
   };
 }

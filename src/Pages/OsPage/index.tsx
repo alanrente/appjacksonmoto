@@ -6,6 +6,10 @@ import { AutoComplete, Button, Form, FormInstance, Input, Modal } from "antd";
 import { FC, useEffect, useState } from "react";
 import { useForm } from "antd/es/form/Form";
 
+interface ValuesAutocomplete {
+  mecanicosAutoComplete: { value: string }[];
+  clientesAutoComplete: { value: string }[];
+}
 interface Values {
   mecanico: string;
   cliente: string;
@@ -17,7 +21,7 @@ interface CollectionForm {
   onFormInstanceReady: (instance: FormInstance<Values>) => void;
   onFinish: (e: any) => void;
   onCancel: (e: any) => void;
-  valuesAutocomplete?: { value: string }[];
+  valuesAutocomplete?: ValuesAutocomplete;
 }
 
 const CreateFormOs: FC<CollectionForm> = ({
@@ -42,14 +46,22 @@ const CreateFormOs: FC<CollectionForm> = ({
     >
       <Form.Item label="Mecanico" name={"mecanico"}>
         <AutoComplete
-          options={valuesAutocomplete}
+          options={valuesAutocomplete!.mecanicosAutoComplete}
           filterOption={(inputValue, option) =>
             option!.value.toUpperCase().indexOf(inputValue.toUpperCase()) !== -1
           }
         />
       </Form.Item>
       <Form.Item label="Cliente" name={"cliente"}>
-        <Input />
+        <AutoComplete
+          options={valuesAutocomplete!.clientesAutoComplete}
+          onSelect={(e) => {
+            console.log("onSelect", e);
+          }}
+          filterOption={(inputValue, option) =>
+            option!.value.toUpperCase().indexOf(inputValue.toUpperCase()) !== -1
+          }
+        />
       </Form.Item>
       <Form.Item label="Placa" name={"placa"}>
         <Input />
@@ -76,7 +88,7 @@ const CreateFormOs: FC<CollectionForm> = ({
   );
 };
 export function OsPage() {
-  const { ordensServico, setvisible, visible, mecanicos } = useOsPage();
+  const { ordensServico, setvisible, visible, autoComplete } = useOsPage();
 
   const [forminstance, setforminstance] = useState<FormInstance>();
 
@@ -107,7 +119,7 @@ export function OsPage() {
       >
         <CreateFormOs
           onFinish={handleOk}
-          valuesAutocomplete={mecanicos}
+          valuesAutocomplete={autoComplete}
           onCancel={() => setvisible(false)}
           initialValues={{
             cliente: "",
