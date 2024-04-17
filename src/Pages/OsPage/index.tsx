@@ -32,11 +32,17 @@ const CreateFormOs: FC<CollectionForm> = ({
   onCancel,
   valuesAutocomplete,
 }) => {
+  const [placa, setplaca] = useState("");
+  const [contato, setcontato] = useState("");
   const [form] = useForm();
 
   useEffect(() => {
     onFormInstanceReady(form);
   }, []);
+  useEffect(() => {
+    console.log(placa);
+    console.log(contato);
+  }, [placa, contato]);
 
   return (
     <Form
@@ -61,7 +67,14 @@ const CreateFormOs: FC<CollectionForm> = ({
             value: cl.nome,
           }))}
           onSelect={(e) => {
-            console.log("onSelect", e);
+            const clienteSelected = valuesAutocomplete!.clientes.find(
+              (cl) => (cl.nome = e)
+            );
+
+            if (!clienteSelected) return;
+
+            setcontato(clienteSelected.contato);
+            setplaca(clienteSelected.placa);
           }}
           filterOption={(inputValue, option) =>
             option!.value.toUpperCase().indexOf(inputValue.toUpperCase()) !== -1
@@ -69,10 +82,10 @@ const CreateFormOs: FC<CollectionForm> = ({
         />
       </Form.Item>
       <Form.Item label="Placa" name={"placa"}>
-        <Input />
+        <Input value={placa} />
       </Form.Item>
       <Form.Item label="Contato" name={"contato"}>
-        <Input />
+        <Input value={contato} />
       </Form.Item>
       <div
         style={{
