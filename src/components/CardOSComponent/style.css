@@ -10,7 +10,9 @@
 }
 
 .card-os__mecanico {
-  margin: 4px;
+  margin: 4px 10px;
+  font-size: larger;
+  /* background-color: #868d92; */
 }
 
 .card-os__buttons {

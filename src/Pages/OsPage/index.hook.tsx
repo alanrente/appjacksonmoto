@@ -4,6 +4,7 @@ import { IOrdemServico } from "../../interfaces/servico.interface";
 
 export function useOsPage() {
   const [ordensServico, setordensServico] = useState<IOrdemServico[]>([]);
+  const [visible, setvisible] = useState(false);
 
   async function handleGetAllOS() {
     const ordens = await getAllOs();
@@ -17,5 +18,7 @@ export function useOsPage() {
 
   return {
     ordensServico,
+    visible,
+    setvisible,
   };
 }

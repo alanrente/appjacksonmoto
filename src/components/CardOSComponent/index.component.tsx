@@ -15,7 +15,8 @@ export function CardOSComponent({ os }: { os: IOrdemServico }) {
   return (
     <div className="card-os">
       <div className="card-os__mecanico">
-        {os.mecanico.nome} - {os.cliente.placa}
+        #{`${os.idOrdemServico}`.padStart(5, "0")} - {os.mecanico.nome} -{" "}
+        {os.cliente.placa}
       </div>
       <div className="card-os__buttons">
         <Button prefixCls="card-os__button" onClick={handleVisible}>

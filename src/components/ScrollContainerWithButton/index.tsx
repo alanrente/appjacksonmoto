@@ -11,7 +11,7 @@ export function ScrollContainerWithButton({ children, onClick }: Props) {
     <div className="scroll-container__main">
       <div className="scroll-container__novo">
         <Button onClick={onClick} prefixCls="scroll-container__button">
-          Novo Serviço
+          Nova Ordem de Serviço
         </Button>
       </div>
       <div className="scroll-container__cards">{children}</div>
