@@ -25,7 +25,7 @@ export function Layout() {
     <>
       {!serverIsOnline ? (
         <>
-          Carregando sistema...
+          <span style={{ marginLeft: ".5rem" }}>Carregando sistema...</span>
           <Skeleton
             active
             prefixCls="skeleton-antd"
