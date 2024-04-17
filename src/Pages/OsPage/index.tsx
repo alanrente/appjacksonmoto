@@ -4,12 +4,12 @@ import { CardOSComponent } from "../../components/CardOSComponent/index.componen
 import { Button } from "antd";
 
 export function OsPage() {
-  const { ordensServico, excludeColumn, handleGetValor } = useOsPage();
+  const { ordensServico } = useOsPage();
 
   return (
     <div className="ospage-main">
       <div className="ospage-novo">
-        <Button>Novo Serviço</Button>
+        <Button prefixCls="ospage-button">Novo Serviço</Button>
       </div>
       <div className="ospage-cards">
         {ordensServico.length > 0 &&
