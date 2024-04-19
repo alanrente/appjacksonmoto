@@ -1,5 +1,5 @@
 import "./style.css";
-import { useOSFormCollection } from "./index.hook";
+import { useOSFormCollection } from "./hook";
 import { useEffect } from "react";
 import { CollectionForm } from "../../interfaces/forms.interface";
 import { AutoComplete, Button, Form, Input } from "antd";

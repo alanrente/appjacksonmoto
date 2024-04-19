@@ -1,6 +1,6 @@
 import "./style.css";
-import { useOsPage } from "./index.hook";
-import { CardOSComponent } from "../../components/CardOSComponent/index.component";
+import { useOsPage } from "./hook";
+import { CardOSComponent } from "../../components/CardOS";
 import { ScrollContainerWithButton } from "../../components/ScrollContainerWithButton";
 import { Fragment } from "react/jsx-runtime";
 import { FormInstance, Modal } from "antd";

@@ -3,7 +3,7 @@ import { RiToolsFill } from "react-icons/ri";
 import { FiPlus } from "react-icons/fi";
 import { IOrdemServico } from "../../interfaces/servico.interface";
 import { Button } from "antd";
-import { SumServicosComponent } from "../SumServicosComponent";
+import { SumServicosComponent } from "../SumServicos";
 import { useState } from "react";
 
 export function CardOSComponent({ os }: { os: IOrdemServico }) {

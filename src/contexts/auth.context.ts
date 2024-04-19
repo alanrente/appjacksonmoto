@@ -1,4 +1,4 @@
-import { LogoutComponent } from "../components/LogoutComponent";
+import { LogoutComponent } from "../components/Logout";
 import { IAuthProvider } from "../interfaces/provider.interface";
 import { User } from "../interfaces/login.interface";
 import { login } from "../services/login.service";

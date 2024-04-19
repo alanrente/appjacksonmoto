@@ -1,5 +1,5 @@
-import { CardServico } from "../../components/CardServico/index.component";
-import { useServicosPage } from "./index.hook";
+import { CardServico } from "../../components/CardServico";
+import { useServicosPage } from "./hook";
 
 export function ServicosPage() {
   const { servicos } = useServicosPage();

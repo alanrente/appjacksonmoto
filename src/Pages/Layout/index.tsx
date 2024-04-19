@@ -7,12 +7,12 @@ import {
   infosRouterChildren,
   router,
 } from "../../routes/browserRouter.route";
-import { LogoutComponent } from "../../components/LogoutComponent";
+import { LogoutComponent } from "../../components/Logout";
 import { ERouteObject } from "../../interfaces/router.interface";
-import { useLayout } from "./index.hook";
+import { useLayout } from "./hook";
 import { useState } from "react";
 import { MenuFoldOutlined, MenuUnfoldOutlined } from "@ant-design/icons";
-import LoginComponent from "../../components/LoginComponent";
+import LoginComponent from "../../components/Login";
 
 export function Layout() {
   const { isAuthenticated } = authProvider;
