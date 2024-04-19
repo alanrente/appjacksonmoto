@@ -1,0 +1,45 @@
+.form-os {
+  height: 100%;
+}
+
+.form-os__f-itens {
+  display: flex;
+  flex-direction: column;
+  max-height: 380px;
+  /* height: 100%; */
+  width: 100%;
+  border-top: 2px solid #000000;
+  border-bottom: 2px solid #000000;
+  /* background-color: brown; */
+  margin-bottom: 30px;
+  overflow-y: scroll;
+}
+
+.ant-form-item {
+  margin-bottom: 10px;
+}
+
+.form-os__container div {
+  display: flex;
+  flex-direction: column !important;
+  width: 100%;
+  /* height: 50px; */
+  /* background-color: aqua; */
+}
+
+.form-os__container input {
+  width: 100%;
+}
+
+.form-os__buttons {
+  position: relative;
+  bottom: 15px;
+  float: inline-end;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+
+  /* background-color: #63aff1; */
+}
