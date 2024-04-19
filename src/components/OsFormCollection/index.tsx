@@ -1,6 +1,5 @@
 import "./style.css";
 import { useOSFormCollection } from "./hook";
-import { useEffect } from "react";
 import { CollectionForm } from "../../interfaces/forms.interface";
 import { AutoComplete, Button, Form, Input } from "antd";
 
@@ -13,10 +12,6 @@ export function OSFormCollection({
 }: CollectionForm) {
   const { disableInfosCliente, form, setdisableInfosCliente } =
     useOSFormCollection();
-
-  useEffect(() => {
-    onFormInstanceReady(form);
-  }, []);
 
   return (
     <>
