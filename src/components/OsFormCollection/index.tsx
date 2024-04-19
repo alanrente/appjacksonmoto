@@ -1,7 +1,6 @@
 import "./style.css";
-import { useForm } from "antd/es/form/Form";
 import { useOSFormCollection } from "./index.hook";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { CollectionForm } from "../../interfaces/forms.interface";
 import { AutoComplete, Button, Form, Input } from "antd";
 
@@ -12,10 +11,8 @@ export function OSFormCollection({
   initialValues,
   valuesAutocomplete,
 }: CollectionForm) {
-  const {} = useOSFormCollection();
-
-  const [form] = useForm();
-  const [disableInfosCliente, setdisableInfosCliente] = useState(false);
+  const { disableInfosCliente, form, setdisableInfosCliente } =
+    useOSFormCollection();
 
   useEffect(() => {
     onFormInstanceReady(form);
