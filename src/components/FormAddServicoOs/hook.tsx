@@ -32,7 +32,6 @@ export function useFormAddServicoOs(idOrdemServico: number) {
   async function handleFinish(values: IServico) {
     values.idServico = idOrdemServico;
     console.log(values);
-    throw new Error("falha ao enviar");
   }
 
   function handleChangeInput(e: ChangeEvent<HTMLInputElement>) {
