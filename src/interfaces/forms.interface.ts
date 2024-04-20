@@ -1,15 +1,13 @@
 import { FormInstance } from "antd";
-import { TCliente, IMecanico } from "./servico.interface";
+import { TCliente, TMecanico, TClienteCreate } from "./servico.interface";
 
 export interface ValuesAutocomplete {
-  mecanicos: IMecanico[];
+  mecanicos: TMecanico[];
   clientes: TCliente[];
 }
 export interface Values {
   mecanico: string;
-  cliente: string;
-  placa: string | null;
-  contato: string | null;
+  cliente: TClienteCreate;
 }
 export interface CollectionForm {
   initialValues?: Values;

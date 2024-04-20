@@ -1,21 +1,22 @@
 import { useEffect, useState } from "react";
-import { getAllOs } from "../../services/os.service";
+import { createOS, getAllOs } from "../../services/os.service";
 import {
   TCliente,
-  IMecanico,
+  TMecanico,
   IOrdemServico,
+  TClienteCreate,
+  TMecanicoCreate,
 } from "../../interfaces/servico.interface";
 import { getAllMecanicos } from "../../services/mecanicos.service";
 import { getAllClientes } from "../../services/clientes.service";
 
 export function useOsPage() {
   const [ordensServico, setordensServico] = useState<IOrdemServico[]>([]);
+  const [visible, setvisible] = useState(false);
   const [autoComplete, setautoComplete] = useState<{
-    mecanicos: IMecanico[];
+    mecanicos: TMecanico[];
     clientes: TCliente[];
   }>({ mecanicos: [], clientes: [] });
-
-  const [visible, setvisible] = useState(false);
 
   async function handleGetAll() {
     const ordens = await getAllOs();
@@ -29,6 +30,14 @@ export function useOsPage() {
     });
   }
 
+  function handleCreateOs(e: TClienteCreate & TMecanicoCreate) {
+    const { mecanico, ...cliente } = e;
+    createOS({
+      cliente,
+      mecanico,
+    });
+  }
+
   useEffect(() => {
     handleGetAll();
   }, []);
@@ -38,5 +47,6 @@ export function useOsPage() {
     visible,
     setvisible,
     autoComplete,
+    handleCreateOs,
   };
 }

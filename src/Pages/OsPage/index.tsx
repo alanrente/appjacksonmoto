@@ -6,15 +6,20 @@ import { Fragment } from "react/jsx-runtime";
 import { FormInstance, Modal } from "antd";
 import { useState } from "react";
 import { OSFormCollection } from "../../components/OsFormCollection";
+import {
+  TClienteCreate,
+  TMecanicoCreate,
+} from "../../interfaces/servico.interface";
 
 export function OsPage() {
-  const { ordensServico, setvisible, visible, autoComplete } = useOsPage();
+  const { ordensServico, setvisible, visible, autoComplete, handleCreateOs } =
+    useOsPage();
 
   const [forminstance, setforminstance] = useState<FormInstance>();
 
-  function handleOk(e: any) {
+  function handleOk(e: TMecanicoCreate & TClienteCreate) {
     forminstance?.resetFields();
-    console.log(e);
+    handleCreateOs(e);
     setvisible(false);
   }
 

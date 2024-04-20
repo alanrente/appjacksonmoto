@@ -1,7 +1,8 @@
 import "./style.css";
 import { useOSFormCollection } from "./hook";
-import { CollectionForm } from "../../interfaces/forms.interface";
+import { CollectionForm, Values } from "../../interfaces/forms.interface";
 import { AutoComplete, Button, Form, Input } from "antd";
+import { TClienteCreate } from "../../interfaces/servico.interface";
 
 export function OSFormCollection({
   onCancel,
@@ -15,11 +16,10 @@ export function OSFormCollection({
 
   return (
     <>
-      <Form
+      <Form<Values>
         form={form}
         initialValues={initialValues}
         onFinish={onFinish}
-        // layout="vertical"
         prefixCls="form-os"
       >
         <div className="form-os__f-itens">
@@ -40,10 +40,10 @@ export function OSFormCollection({
               }
             />
           </Form.Item>
-          <Form.Item
+          <Form.Item<TClienteCreate>
             className="form-os__container"
             label="Cliente"
-            name={"cliente"}
+            name={"nome"}
             rules={[{ required: true }]}
           >
             <AutoComplete
@@ -77,7 +77,7 @@ export function OSFormCollection({
               }
             />
           </Form.Item>
-          <Form.Item
+          <Form.Item<TClienteCreate>
             className="form-os__container"
             label="Placa"
             name={"placa"}
@@ -90,7 +90,7 @@ export function OSFormCollection({
               />
             }
           />
-          <Form.Item
+          <Form.Item<TClienteCreate>
             className="form-os__container"
             label="Contato"
             name={"contato"}
