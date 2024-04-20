@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { getAllOs } from "../../services/os.service";
 import {
-  ICliente,
+  TCliente,
   IMecanico,
   IOrdemServico,
 } from "../../interfaces/servico.interface";
@@ -12,7 +12,7 @@ export function useOsPage() {
   const [ordensServico, setordensServico] = useState<IOrdemServico[]>([]);
   const [autoComplete, setautoComplete] = useState<{
     mecanicos: IMecanico[];
-    clientes: ICliente[];
+    clientes: TCliente[];
   }>({ mecanicos: [], clientes: [] });
 
   const [visible, setvisible] = useState(false);

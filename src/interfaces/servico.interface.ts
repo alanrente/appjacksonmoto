@@ -16,12 +16,15 @@ export interface IMecanico {
   nome: string;
 }
 
-export interface ICliente {
-  idCliente: 1;
+export type TClienteCreate = {
   nome: string;
   placa: string;
   contato: string;
-}
+};
+
+export type TCliente = TClienteCreate & {
+  idCliente: number;
+};
 
 export interface IOrdemServico {
   idOrdemServico: number;
@@ -29,6 +32,24 @@ export interface IOrdemServico {
   mecanicoId: number;
   clienteId: number;
   mecanico: IMecanico;
-  cliente: ICliente;
+  cliente: TCliente;
   servicos: IServico[];
 }
+
+export interface IOrdemServicoCreate {
+  servicos: IServico[];
+  mecanico: string;
+  cliente: {
+    nome: string;
+    placa: string;
+    contato: string;
+  };
+}
+
+type TestInitial = {
+  id: string;
+};
+
+type TestFinal = TestInitial & {
+  nome: string;
+};
