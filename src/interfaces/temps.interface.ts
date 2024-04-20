@@ -1,3 +1,3 @@
 export enum ETempSession {
-  servicoAdd = "t-ordemServico",
+  TempNovaOs = "@TempNovaOs",
 }

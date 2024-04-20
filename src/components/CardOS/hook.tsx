@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { IOrdemServico } from "../../interfaces/servico.interface";
 import { Divider } from "antd";
+import { tagIdOrdemServico } from "../../utils/constants.util";
 
 export function useCardOS(os: IOrdemServico) {
   const [visible, setvisible] = useState(false);
@@ -11,14 +12,13 @@ export function useCardOS(os: IOrdemServico) {
     setvisible(!visible);
   }
 
-  function tagIdOrdemServico() {
-    return `#${os.idOrdemServico.toString().padStart(5, "0")}`;
-  }
-
   function handleClick() {
     const descriptionModal = (
       <>
-        <span>Ordem: {`${tagIdOrdemServico()} - ${os.mecanico.nome}`}</span>
+        <span>
+          Ordem:{" "}
+          {`${tagIdOrdemServico(os.idOrdemServico)} - ${os.mecanico.nome}`}
+        </span>
         <br />
         <span>
           Cliente: {os.cliente.nome} - {os.cliente.placa} - {os.cliente.contato}

@@ -39,7 +39,7 @@ export interface IOrdemServico {
 }
 
 export type TOrdemServicoCreate = {
-  servicos?: IServico[];
+  servicos: IServico[];
   mecanico: string;
   cliente: TClienteCreate;
 };

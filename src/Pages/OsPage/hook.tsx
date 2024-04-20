@@ -19,7 +19,7 @@ export function useOsPage() {
   }>({ mecanicos: [], clientes: [] });
 
   async function handleGetAll() {
-    const ordens = await getAllOs();
+    const ordens = await getAllOs({});
     setordensServico(ordens);
 
     const mecanicos = await getAllMecanicos();
@@ -35,6 +35,7 @@ export function useOsPage() {
     createOS({
       cliente,
       mecanico,
+      servicos: [],
     });
   }
 
