@@ -18,18 +18,19 @@ export function FormAddServicoOs({
   return (
     <Form form={form} onFinish={handleFinish} layout="vertical">
       <Form.Item<IServico>
-        label="Servico"
+        // label="Servico"
         name={"servico"}
         rules={[{ message: "Digite o nome do serviço", required: true }]}
       >
         <AutoComplete
+          placeholder="Serviço"
           options={servicosAutocomplete}
           onSelect={handleSelectAutocomplete}
           filterOption={handleFilterOptions}
         />
       </Form.Item>
       <Form.Item<IServico>
-        label="Valor"
+        // label="Valor"
         name="valor"
         required
         rules={[
@@ -39,7 +40,7 @@ export function FormAddServicoOs({
           },
         ]}
       >
-        <Input onChange={handleChangeInput} />
+        <Input onChange={handleChangeInput} placeholder="Valor" />
       </Form.Item>
       <Button htmlType="submit" type="primary">
         Salvar
