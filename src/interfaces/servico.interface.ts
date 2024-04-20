@@ -11,10 +11,12 @@ export interface IServico {
   osServico: IOsServico;
 }
 
-export interface IMecanico {
+export type TMecanicoCreate = {
+  mecanico: string;
+};
+export type TMecanico = TClienteCreate & {
   idMecanico: number;
-  nome: string;
-}
+};
 
 export type TClienteCreate = {
   nome: string;
@@ -31,25 +33,13 @@ export interface IOrdemServico {
   dataExecucao: string;
   mecanicoId: number;
   clienteId: number;
-  mecanico: IMecanico;
+  mecanico: TMecanico;
   cliente: TCliente;
   servicos: IServico[];
 }
 
-export interface IOrdemServicoCreate {
-  servicos: IServico[];
+export type TOrdemServicoCreate = {
+  servicos?: IServico[];
   mecanico: string;
-  cliente: {
-    nome: string;
-    placa: string;
-    contato: string;
-  };
-}
-
-type TestInitial = {
-  id: string;
-};
-
-type TestFinal = TestInitial & {
-  nome: string;
+  cliente: TClienteCreate;
 };
