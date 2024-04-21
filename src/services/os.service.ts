@@ -3,6 +3,7 @@ import { useConfirmWarning } from "../hooks/useConfirmWarning";
 import { useMessageAntd } from "../hooks/useMessageAntd";
 import {
   IOrdemServico,
+  ServicosAddOs,
   TOrdemServicoCreate,
 } from "../interfaces/servico.interface";
 import { ETempSession } from "../interfaces/temps.interface";
@@ -67,4 +68,18 @@ export function createOS(ordemServico: TOrdemServicoCreate) {
         },
       });
     });
+}
+
+export async function addServicosInOs(servicosAndIdOS: ServicosAddOs) {
+  return await api
+    .post("/ordem-servicos/adicionar-servicos-os", servicosAndIdOS, {
+      headers: { Authorization: getBearerToken() },
+    })
+    .then((res) => {
+      useMessageAntd({ content: "Serviços criados", type: "success" });
+      return res;
+    })
+    .catch((err) =>
+      useMessageAntd({ content: `${err.message}`, type: "error" })
+    );
 }

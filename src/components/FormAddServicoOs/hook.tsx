@@ -1,5 +1,5 @@
 import { useForm } from "antd/es/form/Form";
-import React, { ChangeEvent, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   IServicoInitialValues,
   IServicoSV,
@@ -7,8 +7,12 @@ import {
 } from "../../interfaces/servico.interface";
 import { getAllServicos } from "../../services/servicos.service";
 import { DefaultOptionType } from "antd/es/select";
+import { addServicosInOs } from "../../services/os.service";
 
-export function useFormAddServicoOs(idOrdemServico: number) {
+export function useFormAddServicoOs(
+  idOrdemServico: number,
+  onCloseModal?: (args?: any) => any | void
+) {
   const [form] = useForm<ServicosAddOs>();
   const [initialValuesFormList, setInitialValuesFormList] =
     useState<IServicoInitialValues>({ servicos: [{ servico: "", valor: 0 }] });
@@ -35,7 +39,8 @@ export function useFormAddServicoOs(idOrdemServico: number) {
 
   async function handleFinish(values: ServicosAddOs) {
     values.idOrdemServico = idOrdemServico;
-    console.log(values);
+    await addServicosInOs(values);
+    form.resetFields(["servicos"]);
   }
 
   function addOrRemoveValuesServico({

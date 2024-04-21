@@ -48,7 +48,12 @@ export function CardOSComponent({ os }: { os: IOrdemServico }) {
           closeIcon={false}
           title={titleModal}
         >
-          <FormAddServicoOs idOrdemServico={os.idOrdemServico} />
+          <FormAddServicoOs
+            idOrdemServico={os.idOrdemServico}
+            onCloseModal={() => {
+              setopenModal(false);
+            }}
+          />
         </Modal>
       )}
     </div>

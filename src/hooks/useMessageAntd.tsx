@@ -10,7 +10,5 @@ type Props = {
 };
 
 export function useMessageAntd({ content, duration, onClose, type }: Props) {
-  console.log(content, type);
-
   return message[type](content, duration, onClose);
 }

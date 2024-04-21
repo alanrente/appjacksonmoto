@@ -6,8 +6,10 @@ import { CloseOutlined, PlusOutlined } from "@ant-design/icons";
 
 export function FormAddServicoOs({
   idOrdemServico,
+  onCloseModal,
 }: {
   idOrdemServico: number;
+  onCloseModal?: () => any | void;
 }) {
   const {
     form,
@@ -21,7 +23,10 @@ export function FormAddServicoOs({
   return (
     <Form
       form={form}
-      onFinish={handleFinish}
+      onFinish={async (e) => {
+        await handleFinish(e);
+        onCloseModal && onCloseModal();
+      }}
       initialValues={initialValuesFormList}
     >
       <Form.List name="servicos">
