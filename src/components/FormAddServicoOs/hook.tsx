@@ -1,12 +1,11 @@
 import { useForm } from "antd/es/form/Form";
 import React, { ChangeEvent, useEffect, useState } from "react";
-import { IServico } from "../../interfaces/servico.interface";
+import { ServicosAddOs } from "../../interfaces/servico.interface";
 import { getAllServicos } from "../../services/servicos.service";
 import { DefaultOptionType } from "antd/es/select";
 
 export function useFormAddServicoOs(idOrdemServico: number) {
-  const [form] = useForm<IServico>();
-  const [servicos, setServicos] = useState<IServico[]>([]);
+  const [form] = useForm<ServicosAddOs>();
   const [servicosAutocomplete, setServicosAutocomplete] =
     useState<{ label: any; value: any }[]>();
 
@@ -26,11 +25,10 @@ export function useFormAddServicoOs(idOrdemServico: number) {
     }));
 
     setServicosAutocomplete(toAutocomplete);
-    setServicos(servicos);
   }
 
-  async function handleFinish(values: IServico) {
-    values.idServico = idOrdemServico;
+  async function handleFinish(values: ServicosAddOs) {
+    values.idOrdemServico = idOrdemServico;
     console.log(values);
   }
 
@@ -70,7 +68,6 @@ export function useFormAddServicoOs(idOrdemServico: number) {
   return {
     form,
     servicosAutocomplete,
-    servicos,
     handleSelectAutocomplete,
     handleFilterOptions,
     handleFinish,

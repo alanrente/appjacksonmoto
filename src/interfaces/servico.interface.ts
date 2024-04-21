@@ -11,6 +11,11 @@ export interface IServico {
   osServico: IOsServico;
 }
 
+export type ServicosAddOs = {
+  servicos: IServico[];
+  idOrdemServico: number;
+};
+
 export type TMecanicoCreate = {
   mecanico: string;
 };
