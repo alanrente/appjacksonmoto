@@ -12,16 +12,17 @@ export function FormAddServicoOs({
   const {
     form,
     servicosAutocomplete,
+    initialValuesFormList,
     handleSelectAutocomplete,
+    addOrRemoveValuesServico,
     handleFilterOptions,
     handleFinish,
-    handleChangeInput,
   } = useFormAddServicoOs(idOrdemServico);
   return (
     <Form
       form={form}
       onFinish={handleFinish}
-      initialValues={{ servicos: [{}] }}
+      initialValues={initialValuesFormList}
     >
       <Form.List name="servicos">
         {(fields, { add, remove }) =>
@@ -37,7 +38,7 @@ export function FormAddServicoOs({
                   prefixCls="form-os-autocomplete"
                   placeholder="Serviço"
                   options={servicosAutocomplete}
-                  onSelect={handleSelectAutocomplete}
+                  onSelect={(e) => handleSelectAutocomplete(e, field.name)}
                   filterOption={handleFilterOptions}
                 />
               </Form.Item>
@@ -53,12 +54,23 @@ export function FormAddServicoOs({
               >
                 <Input
                   prefixCls="form-os-input"
-                  onChange={handleChangeInput}
                   placeholder="Valor"
+                  type="number"
                 />
               </Form.Item>
-              {index > 0 && <CloseOutlined onClick={() => remove(index)} />}
               <PlusOutlined onClick={() => add()} />
+              {index > 0 && (
+                <CloseOutlined
+                  onClick={() => {
+                    remove(index);
+                    addOrRemoveValuesServico({
+                      addOrRemove: "remove",
+                      index,
+                      value: { servico: "", valor: 0 },
+                    });
+                  }}
+                />
+              )}
             </div>
           ))
         }

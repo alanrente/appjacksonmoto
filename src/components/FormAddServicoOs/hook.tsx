@@ -1,11 +1,17 @@
 import { useForm } from "antd/es/form/Form";
 import React, { ChangeEvent, useEffect, useState } from "react";
-import { ServicosAddOs } from "../../interfaces/servico.interface";
+import {
+  IServicoInitialValues,
+  IServicoSV,
+  ServicosAddOs,
+} from "../../interfaces/servico.interface";
 import { getAllServicos } from "../../services/servicos.service";
 import { DefaultOptionType } from "antd/es/select";
 
 export function useFormAddServicoOs(idOrdemServico: number) {
   const [form] = useForm<ServicosAddOs>();
+  const [initialValuesFormList, setInitialValuesFormList] =
+    useState<IServicoInitialValues>({ servicos: [{ servico: "", valor: 0 }] });
   const [servicosAutocomplete, setServicosAutocomplete] =
     useState<{ label: any; value: any }[]>();
 
@@ -32,20 +38,47 @@ export function useFormAddServicoOs(idOrdemServico: number) {
     console.log(values);
   }
 
-  function handleChangeInput(e: ChangeEvent<HTMLInputElement>) {
-    const value = e.target.value;
-    if (isNaN(Number(value))) {
-      form.setFieldValue("valor", "");
-      return;
-    }
+  function addOrRemoveValuesServico({
+    addOrRemove,
+    index,
+    value,
+  }: {
+    value: { servico: string; valor: number };
+    index: number;
+    addOrRemove: "add" | "remove";
+  }) {
+    let valuesServicos: IServicoSV[] = initialValuesFormList.servicos;
+    const { servico, valor } = value;
+    const objAddOrRemove = {
+      add() {
+        valuesServicos =
+          index === 0
+            ? [{ servico, valor }]
+            : [...initialValuesFormList.servicos, { servico, valor }];
+      },
+      remove() {
+        valuesServicos.splice(index, 1);
+      },
+    };
+
+    objAddOrRemove[addOrRemove]();
+
+    setInitialValuesFormList({ servicos: valuesServicos });
+    form.setFieldsValue({
+      servicos: valuesServicos,
+    });
+    return valuesServicos;
   }
 
-  function handleSelectAutocomplete(value: any, label?: any) {
+  function handleSelectAutocomplete(value: any, index: number) {
     const objOfValue = JSON.parse(value) as any[];
-    objOfValue.push(idOrdemServico);
-    console.log(objOfValue);
-    form.setFieldValue("servico", objOfValue[0]);
-    form.setFieldValue("valor", objOfValue[1]);
+    const [servico, valor] = objOfValue;
+
+    addOrRemoveValuesServico({
+      addOrRemove: "add",
+      index,
+      value: { servico, valor },
+    });
   }
 
   function handleFilterOptions(
@@ -68,9 +101,10 @@ export function useFormAddServicoOs(idOrdemServico: number) {
   return {
     form,
     servicosAutocomplete,
+    initialValuesFormList,
     handleSelectAutocomplete,
+    addOrRemoveValuesServico,
     handleFilterOptions,
     handleFinish,
-    handleChangeInput,
   };
 }

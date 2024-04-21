@@ -10,6 +10,14 @@ export interface IServico {
   valor: number;
   osServico: IOsServico;
 }
+export type IServicoSV = {
+  servico: string;
+  valor: number;
+};
+
+export type IServicoInitialValues = {
+  servicos: IServicoSV[];
+};
 
 export type ServicosAddOs = {
   servicos: IServico[];

@@ -1,20 +1,22 @@
 .form-os-conteudo {
-  background-color: #4b414193;
+  /* background-color: #4b414193; */
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
+  align-items: center;
+  justify-content: flex-start;
   padding: 0;
   width: 100%;
   gap: 1rem;
 }
 
 .form-os-conteudo div {
-  margin-bottom: 0;
+  /* margin-bottom: 0; */
 }
 
 .form-os-autocomplete {
-  width: 180px !important;
+  width: 250px !important;
 }
 
 .form-os-input {
+  width: 100px;
 }
