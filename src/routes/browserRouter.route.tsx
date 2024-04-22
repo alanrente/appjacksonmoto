@@ -15,24 +15,24 @@ export const infosRouterChildren: IRouteObject = {
     index: true,
     Component: LoginComponent,
   },
-  [ERouteObject.home]: {
-    id: "Home",
-    path: "home",
-    element: <HomePage />,
-    loader: protectedLoader,
-  },
+  // [ERouteObject.home]: {
+  //   id: "Home",
+  //   path: "home",
+  //   element: <HomePage />,
+  //   loader: protectedLoader,
+  // },
   [ERouteObject.os]: {
-    id: "OS's",
+    id: "Ordem Serviço",
     path: ERouteObject.os,
     loader: protectedLoader,
     element: <OsPage />,
   },
-  [ERouteObject.servicos]: {
-    id: "Serviços",
-    path: "servicos",
-    loader: protectedLoader,
-    element: <ServicosPage />,
-  },
+  // [ERouteObject.servicos]: {
+  //   id: "Serviços",
+  //   path: "servicos",
+  //   loader: protectedLoader,
+  //   element: <ServicosPage />,
+  // },
   [ERouteObject.sair]: {
     id: "Sair",
     path: "logout",

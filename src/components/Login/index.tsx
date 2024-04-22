@@ -15,7 +15,7 @@ function LoginComponent() {
   const onFinish: FormProps<User>["onFinish"] = async (values: User) => {
     setload(true);
     const params = new URLSearchParams(location.search);
-    const from = params.get("from") || `/${ERouteObject.home}`;
+    const from = params.get("from") || `/${ERouteObject.os}`;
 
     try {
       await authProvider.signin(values);
