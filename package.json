@@ -2,9 +2,7 @@
   "name": "appjacksonmoto",
   "version": "0.1.0",
   "private": true,
-  "engines": {
-    "node": ">=18"
-  },
+  "engines": {},
   "dependencies": {
     "@ant-design/icons": "^5.3.6",
     "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
