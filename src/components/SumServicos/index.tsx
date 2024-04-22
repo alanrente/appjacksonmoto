@@ -32,12 +32,12 @@ export function SumServicosComponent({ servicos, args, show }: IProps) {
       {servicos.map((serv, i) => {
         return (
           <div key={i.toString()} className="sum-servicos__conteudo">
-            <MdEdit />
+            {/* <MdEdit /> */}
             <div className="sum-servicos__descricao-valor">
               <span>{`${serv.servico}`.slice(0, 35)}</span>
               <span>{serv.osServico.valor}</span>
             </div>
-            <MdDelete onClick={() => handleDelete(serv)} />
+            {/* <MdDelete onClick={() => handleDelete(serv)} /> */}
           </div>
         );
       })}

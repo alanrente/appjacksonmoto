@@ -26,7 +26,7 @@ export function LogoutComponent({ onClick }: Props) {
       onClick={handleOnclick}
       className="logout-component"
     >
-      {isLoggingOut ? "" : "Sair"}
+      Sair
     </Button>
   );
 }

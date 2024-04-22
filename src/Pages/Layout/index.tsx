@@ -10,16 +10,13 @@ import {
 import { LogoutComponent } from "../../components/Logout";
 import { ERouteObject } from "../../interfaces/router.interface";
 import { useLayout } from "./hook";
-import { useState } from "react";
 import { MenuFoldOutlined, MenuUnfoldOutlined } from "@ant-design/icons";
 import LoginComponent from "../../components/Login";
 
 export function Layout() {
   const { isAuthenticated } = authProvider;
   const navigate = useNavigate();
-  const { serverIsOnline } = useLayout();
-
-  const [visible, setvisible] = useState(false);
+  const { serverIsOnline, visible, refSideBar, setvisible } = useLayout();
 
   return (
     <>
@@ -39,7 +36,10 @@ export function Layout() {
             <LoginComponent />
           ) : (
             <div className="App" key={Layout.name}>
-              <div className={`${visible ? "App-sider" : "App-sider__close"}`}>
+              <div
+                ref={refSideBar}
+                className={`${visible ? "App-sider" : "App-sider__close"}`}
+              >
                 <div className="App-sider__buttons">
                   {isAuthenticated &&
                     router.routes
