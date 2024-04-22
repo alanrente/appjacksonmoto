@@ -81,7 +81,7 @@ export function FormAddServicoOs({
         }
       </Form.List>
       <Button htmlType="submit" type="primary">
-        Adicionar
+        Salvar
       </Button>
     </Form>
   );
