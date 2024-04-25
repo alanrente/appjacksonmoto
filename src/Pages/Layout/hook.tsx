@@ -24,13 +24,10 @@ export function useLayout() {
 
   useEffect(() => {
     getStatusApi();
-  });
-
-  useEffect(() => {
     document.addEventListener("mousedown", checkClickOutside);
 
     return () => document.removeEventListener("mousedown", checkClickOutside);
-  }, [visible]);
+  });
 
   return { serverIsOnline, visible, refSideBar, setvisible };
 }
