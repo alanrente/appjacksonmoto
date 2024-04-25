@@ -2,8 +2,7 @@ import "./style.css";
 import { useOsPage } from "./hook";
 import { CardOSComponent } from "../../components/CardOS";
 import { ScrollContainerWithButton } from "../../components/ScrollContainerWithButton";
-import { Fragment } from "react/jsx-runtime";
-import { FormInstance, Modal } from "antd";
+import { FormInstance, Modal, Skeleton } from "antd";
 import { useState } from "react";
 import { OSFormCollection } from "../../components/OsFormCollection";
 import {
@@ -12,28 +11,31 @@ import {
 } from "../../interfaces/servico.interface";
 
 export function OsPage() {
-  const { ordensServico, setvisible, visible, autoComplete, handleCreateOs } =
+  const { ordens, setvisible, visible, autoComplete, mutationOrdens } =
     useOsPage();
 
   const [forminstance, setforminstance] = useState<FormInstance>();
 
   function handleOk(e: TMecanicoCreate & TClienteCreate) {
     forminstance?.resetFields();
-    handleCreateOs(e);
-    setvisible(false);
+    mutationOrdens.mutate(e);
+  }
+
+  function retornaArrayElement() {
+    if (!ordens) return [<Skeleton active />];
+    if (ordens && ordens.length > 0)
+      return ordens.map((os, i) => (
+        <CardOSComponent os={os} key={i.toString()} />
+      ));
+
+    return [<>Não ha ordens cadastradas!</>];
   }
 
   return (
     <>
       <ScrollContainerWithButton
         onClick={() => setvisible(true)}
-        children={
-          ordensServico.length > 0
-            ? ordensServico.map((os, i) => (
-                <CardOSComponent os={os} key={i.toString()} />
-              ))
-            : [<Fragment key={"empty"}></Fragment>]
-        }
+        children={retornaArrayElement()}
       />
       <Modal
         open={visible}

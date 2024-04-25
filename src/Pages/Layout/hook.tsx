@@ -14,7 +14,7 @@ export function useLayout() {
   }
 
   function checkClickOutside(e: any) {
-    console.log("checkClickOutside refSideBar", e.target);
+    // console.log("checkClickOutside refSideBar", e.target);
     if (!e.target) return;
 
     if (visible && !refSideBar.current?.contains(e.target)) {
@@ -24,13 +24,10 @@ export function useLayout() {
 
   useEffect(() => {
     getStatusApi();
-  });
-
-  useEffect(() => {
     document.addEventListener("mousedown", checkClickOutside);
 
     return () => document.removeEventListener("mousedown", checkClickOutside);
-  }, [visible]);
+  });
 
   return { serverIsOnline, visible, refSideBar, setvisible };
 }

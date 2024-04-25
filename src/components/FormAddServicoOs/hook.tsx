@@ -8,16 +8,21 @@ import {
 import { getAllServicos } from "../../services/servicos.service";
 import { DefaultOptionType } from "antd/es/select";
 import { addServicosInOs } from "../../services/os.service";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { Alert } from "antd";
 
 export function useFormAddServicoOs(
   idOrdemServico: number,
   onCloseModal?: (args?: any) => any | void
 ) {
   const [form] = useForm<ServicosAddOs>();
-  const [initialValuesFormList, setInitialValuesFormList] =
-    useState<IServicoInitialValues>({ servicos: [{ servico: "", valor: 0 }] });
+  const [initialValuesFormList] = useState<IServicoInitialValues>({
+    servicos: [{ servico: "", valor: 0 }],
+  });
   const [servicosAutocomplete, setServicosAutocomplete] =
     useState<{ label: any; value: any }[]>();
+
+  const queryClient = useQueryClient();
 
   async function handleGetServicos() {
     const servicos = await getAllServicos();
@@ -37,29 +42,41 @@ export function useFormAddServicoOs(
     setServicosAutocomplete(toAutocomplete);
   }
 
-  async function handleFinish(values: ServicosAddOs) {
-    values.idOrdemServico = idOrdemServico;
-    await addServicosInOs(values);
-    form.resetFields(["servicos"]);
-  }
+  const mutateFinish = useMutation({
+    mutationFn: async (values: ServicosAddOs) => {
+      values.idOrdemServico = idOrdemServico;
+      await addServicosInOs(values);
+      form.resetFields(["servicos"]);
+    },
+    onError: (err) => {
+      Alert({ type: "error", message: err.message });
+    },
+    onSuccess: () => {
+      onCloseModal && onCloseModal();
+      queryClient.invalidateQueries({ queryKey: ["ordens-servico"] });
+    },
+  });
 
-  function addOrRemoveValuesServico({
+  function changeOrRemoveValuesServico({
     addOrRemove,
     index,
     value,
   }: {
-    value: { servico: string; valor: number };
+    value: { servico: string; valor?: number };
     index: number;
-    addOrRemove: "add" | "remove";
+    addOrRemove: "change" | "remove";
   }) {
-    let valuesServicos: IServicoSV[] = initialValuesFormList.servicos;
+    const { servicos } = form.getFieldsValue();
+    console.log(servicos);
+
+    let valuesServicos: IServicoSV[] = servicos;
     const { servico, valor } = value;
     const objAddOrRemove = {
-      add() {
-        valuesServicos =
-          index === 0
-            ? [{ servico, valor }]
-            : [...initialValuesFormList.servicos, { servico, valor }];
+      change() {
+        const novoValor = valor ? valor : servicos[index].valor,
+          novoServico = servico ? servico : servicos[index].servico;
+
+        valuesServicos[index] = { servico: novoServico, valor: novoValor };
       },
       remove() {
         valuesServicos.splice(index, 1);
@@ -68,7 +85,6 @@ export function useFormAddServicoOs(
 
     objAddOrRemove[addOrRemove]();
 
-    setInitialValuesFormList({ servicos: valuesServicos });
     form.setFieldsValue({
       servicos: valuesServicos,
     });
@@ -79,10 +95,26 @@ export function useFormAddServicoOs(
     const objOfValue = JSON.parse(value) as any[];
     const [servico, valor] = objOfValue;
 
-    addOrRemoveValuesServico({
-      addOrRemove: "add",
+    changeOrRemoveValuesServico({
+      addOrRemove: "change",
       index,
       value: { servico, valor },
+    });
+  }
+
+  function handleInputAutoComplete(value: any, index: number) {
+    changeOrRemoveValuesServico({
+      addOrRemove: "change",
+      index,
+      value: { servico: value },
+    });
+  }
+
+  function handleChangeValor(value: any, index: number) {
+    changeOrRemoveValuesServico({
+      addOrRemove: "change",
+      index,
+      value: { servico: "", valor: value.target.value },
     });
   }
 
@@ -105,11 +137,13 @@ export function useFormAddServicoOs(
 
   return {
     form,
+    mutateFinish,
     servicosAutocomplete,
     initialValuesFormList,
-    handleSelectAutocomplete,
-    addOrRemoveValuesServico,
+    handleChangeValor,
     handleFilterOptions,
-    handleFinish,
+    handleInputAutoComplete,
+    addOrRemoveValuesServico: changeOrRemoveValuesServico,
+    handleSelectAutocomplete,
   };
 }

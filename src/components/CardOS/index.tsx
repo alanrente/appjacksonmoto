@@ -9,12 +9,12 @@ import { FormAddServicoOs } from "../FormAddServicoOs";
 
 export function CardOSComponent({ os }: { os: IOrdemServico }) {
   const {
-    handleClick,
     visible,
-    handleVisible,
     openModal,
-    setopenModal,
     titleModal,
+    handleClick,
+    setopenModal,
+    handleVisible,
     tagIdOrdemServico,
   } = useCardOS(os);
 

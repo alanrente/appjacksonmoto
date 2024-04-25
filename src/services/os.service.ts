@@ -39,7 +39,7 @@ async function createOrdemServico({
 
 export function createOS(ordemServico: TOrdemServicoCreate) {
   sessionStorage.setItem(ETempSession.TempNovaOs, JSON.stringify(ordemServico));
-  createOrdemServico({ timeoutMs: 15000, ordem: ordemServico })
+  return createOrdemServico({ timeoutMs: 15000, ordem: ordemServico })
     .then((res) => {
       useMessageAntd({
         type: "success",
