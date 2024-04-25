@@ -16,17 +16,20 @@ export function FormAddServicoOs({
     mutateFinish,
     servicosAutocomplete,
     initialValuesFormList,
+    loading,
+    setLoading,
     handleChangeValor,
     handleFilterOptions,
-    handleInputAutoComplete,
+    handleChangeAutoComplete,
     handleSelectAutocomplete,
-    addOrRemoveValuesServico,
+    changeOrRemoveValuesServico,
   } = useFormAddServicoOs(idOrdemServico, onCloseModal);
 
   return (
     <Form
       form={form}
       onFinish={async (e) => {
+        setLoading(true);
         mutateFinish.mutate(e);
       }}
       initialValues={initialValuesFormList}
@@ -44,7 +47,7 @@ export function FormAddServicoOs({
                 <AutoComplete
                   prefixCls="form-os-autocomplete"
                   placeholder="Serviço"
-                  onChange={(e) => handleInputAutoComplete(e, field.name)}
+                  onChange={(e) => handleChangeAutoComplete(e, field.name)}
                   options={servicosAutocomplete}
                   onSelect={(e) => handleSelectAutocomplete(e, field.name)}
                   filterOption={handleFilterOptions}
@@ -72,7 +75,7 @@ export function FormAddServicoOs({
                 <CloseOutlined
                   onClick={() => {
                     remove(index);
-                    addOrRemoveValuesServico({
+                    changeOrRemoveValuesServico({
                       addOrRemove: "remove",
                       index,
                       value: { servico: "", valor: 0 },
@@ -84,7 +87,7 @@ export function FormAddServicoOs({
           ))
         }
       </Form.List>
-      <Button htmlType="submit" type="primary">
+      <Button htmlType="submit" type="primary" loading={loading}>
         Salvar
       </Button>
     </Form>

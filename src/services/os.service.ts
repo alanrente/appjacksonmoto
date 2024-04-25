@@ -37,7 +37,7 @@ async function createOrdemServico({
   return data as IOrdemServico;
 }
 
-export function createOS(ordemServico: TOrdemServicoCreate) {
+export async function createOS(ordemServico: TOrdemServicoCreate) {
   sessionStorage.setItem(ETempSession.TempNovaOs, JSON.stringify(ordemServico));
   return createOrdemServico({ timeoutMs: 15000, ordem: ordemServico })
     .then((res) => {

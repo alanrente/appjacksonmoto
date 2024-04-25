@@ -21,6 +21,7 @@ export function useFormAddServicoOs(
   });
   const [servicosAutocomplete, setServicosAutocomplete] =
     useState<{ label: any; value: any }[]>();
+  const [loading, setLoading] = useState(false);
 
   const queryClient = useQueryClient();
 
@@ -52,6 +53,7 @@ export function useFormAddServicoOs(
       Alert({ type: "error", message: err.message });
     },
     onSuccess: () => {
+      setLoading(false);
       onCloseModal && onCloseModal();
       queryClient.invalidateQueries({ queryKey: ["ordens-servico"] });
     },
@@ -67,7 +69,6 @@ export function useFormAddServicoOs(
     addOrRemove: "change" | "remove";
   }) {
     const { servicos } = form.getFieldsValue();
-    console.log(servicos);
 
     let valuesServicos: IServicoSV[] = servicos;
     const { servico, valor } = value;
@@ -102,7 +103,7 @@ export function useFormAddServicoOs(
     });
   }
 
-  function handleInputAutoComplete(value: any, index: number) {
+  function handleChangeAutoComplete(value: any, index: number) {
     changeOrRemoveValuesServico({
       addOrRemove: "change",
       index,
@@ -140,10 +141,12 @@ export function useFormAddServicoOs(
     mutateFinish,
     servicosAutocomplete,
     initialValuesFormList,
+    loading,
+    setLoading,
     handleChangeValor,
     handleFilterOptions,
-    handleInputAutoComplete,
-    addOrRemoveValuesServico: changeOrRemoveValuesServico,
+    handleChangeAutoComplete,
+    changeOrRemoveValuesServico,
     handleSelectAutocomplete,
   };
 }
