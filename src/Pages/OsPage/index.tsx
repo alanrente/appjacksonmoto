@@ -21,17 +21,21 @@ export function OsPage() {
     mutationOrdens.mutate(e);
   }
 
+  function retornaArrayElement() {
+    if (!ordens) return [<Skeleton active />];
+    if (ordens && ordens.length > 0)
+      return ordens.map((os, i) => (
+        <CardOSComponent os={os} key={i.toString()} />
+      ));
+
+    return [<>Não ha ordens cadastradas!</>];
+  }
+
   return (
     <>
       <ScrollContainerWithButton
         onClick={() => setvisible(true)}
-        children={
-          ordens && ordens.length > 0
-            ? ordens.map((os, i) => (
-                <CardOSComponent os={os} key={i.toString()} />
-              ))
-            : [<Skeleton active />]
-        }
+        children={retornaArrayElement()}
       />
       <Modal
         open={visible}

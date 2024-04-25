@@ -10,7 +10,6 @@ import {
 import { getAllMecanicos } from "../../services/mecanicos.service";
 import { getAllClientes } from "../../services/clientes.service";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { useMessageAntd } from "../../hooks/useMessageAntd";
 import { Alert } from "antd";
 
 export function useOsPage() {

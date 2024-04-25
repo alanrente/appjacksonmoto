@@ -16,9 +16,11 @@ export function FormAddServicoOs({
     mutateFinish,
     servicosAutocomplete,
     initialValuesFormList,
+    handleChangeValor,
+    handleFilterOptions,
+    handleInputAutoComplete,
     handleSelectAutocomplete,
     addOrRemoveValuesServico,
-    handleFilterOptions,
   } = useFormAddServicoOs(idOrdemServico, onCloseModal);
 
   return (
@@ -42,6 +44,7 @@ export function FormAddServicoOs({
                 <AutoComplete
                   prefixCls="form-os-autocomplete"
                   placeholder="Serviço"
+                  onChange={(e) => handleInputAutoComplete(e, field.name)}
                   options={servicosAutocomplete}
                   onSelect={(e) => handleSelectAutocomplete(e, field.name)}
                   filterOption={handleFilterOptions}
@@ -58,6 +61,7 @@ export function FormAddServicoOs({
                 ]}
               >
                 <Input
+                  onChange={(e) => handleChangeValor(e, field.name)}
                   prefixCls="form-os-input"
                   placeholder="Valor"
                   type="number"
