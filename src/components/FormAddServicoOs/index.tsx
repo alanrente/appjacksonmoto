@@ -13,19 +13,19 @@ export function FormAddServicoOs({
 }) {
   const {
     form,
+    mutateFinish,
     servicosAutocomplete,
     initialValuesFormList,
     handleSelectAutocomplete,
     addOrRemoveValuesServico,
     handleFilterOptions,
-    handleFinish,
-  } = useFormAddServicoOs(idOrdemServico);
+  } = useFormAddServicoOs(idOrdemServico, onCloseModal);
+
   return (
     <Form
       form={form}
       onFinish={async (e) => {
-        await handleFinish(e);
-        onCloseModal && onCloseModal();
+        mutateFinish.mutate(e);
       }}
       initialValues={initialValuesFormList}
     >

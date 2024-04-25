@@ -8,6 +8,8 @@ import {
 import { getAllServicos } from "../../services/servicos.service";
 import { DefaultOptionType } from "antd/es/select";
 import { addServicosInOs } from "../../services/os.service";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { Alert } from "antd";
 
 export function useFormAddServicoOs(
   idOrdemServico: number,
@@ -18,6 +20,8 @@ export function useFormAddServicoOs(
     useState<IServicoInitialValues>({ servicos: [{ servico: "", valor: 0 }] });
   const [servicosAutocomplete, setServicosAutocomplete] =
     useState<{ label: any; value: any }[]>();
+
+  const queryClient = useQueryClient();
 
   async function handleGetServicos() {
     const servicos = await getAllServicos();
@@ -37,11 +41,20 @@ export function useFormAddServicoOs(
     setServicosAutocomplete(toAutocomplete);
   }
 
-  async function handleFinish(values: ServicosAddOs) {
-    values.idOrdemServico = idOrdemServico;
-    await addServicosInOs(values);
-    form.resetFields(["servicos"]);
-  }
+  const mutateFinish = useMutation({
+    mutationFn: async (values: ServicosAddOs) => {
+      values.idOrdemServico = idOrdemServico;
+      await addServicosInOs(values);
+      form.resetFields(["servicos"]);
+    },
+    onError: (err) => {
+      Alert({ type: "error", message: err.message });
+    },
+    onSuccess: () => {
+      onCloseModal && onCloseModal();
+      queryClient.invalidateQueries({ queryKey: ["ordens-servico"] });
+    },
+  });
 
   function addOrRemoveValuesServico({
     addOrRemove,
@@ -107,9 +120,9 @@ export function useFormAddServicoOs(
     form,
     servicosAutocomplete,
     initialValuesFormList,
+    mutateFinish,
     handleSelectAutocomplete,
     addOrRemoveValuesServico,
     handleFilterOptions,
-    handleFinish,
   };
 }
