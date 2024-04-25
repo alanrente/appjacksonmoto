@@ -23,6 +23,7 @@ export function useOsPage() {
       const ordens: IOrdemServico[] = await getAllOs({});
       return ordens;
     },
+    gcTime: 0,
   });
 
   const mutationOrdens = useMutation({
