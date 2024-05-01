@@ -34,7 +34,6 @@ export function useOsPage() {
       setvisibleSkeleton(false);
       return ordens;
     },
-    gcTime: 0,
   });
 
   const mutationGetFiltered = useMutation({
