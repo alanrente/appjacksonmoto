@@ -4,20 +4,17 @@ import { useOsPage } from "./hook";
 import { ptBR } from "date-fns/locale";
 import { CardOSComponent } from "../../components/CardOS";
 import { ScrollContainerWithButton } from "../../components/ScrollContainerWithButton";
-import { DatePicker, FormInstance, Modal, Skeleton } from "antd";
+import { FormInstance, Input, Modal, Skeleton } from "antd";
 import { useState } from "react";
 import { OSFormCollection } from "../../components/OsFormCollection";
 import {
   TClienteCreate,
   TMecanicoCreate,
 } from "../../interfaces/servico.interface";
-import pickerLocale from "../../utils/pickerLocale";
 import { DateRange, DayPicker } from "react-day-picker";
 import { addDays, format } from "date-fns";
 
 export function OsPage() {
-  const { RangePicker } = DatePicker;
-
   const month = new Date();
 
   const defaultSelected: DateRange = {
@@ -26,6 +23,8 @@ export function OsPage() {
   };
 
   const [range, setRange] = useState<DateRange | undefined>(defaultSelected);
+  const [showDatePicker, setShowDatePicker] = useState(false);
+  const [forminstance, setforminstance] = useState<FormInstance>();
 
   const {
     visible,
@@ -39,7 +38,11 @@ export function OsPage() {
     retornaArrayElement,
   } = useOsPage();
 
-  const [forminstance, setforminstance] = useState<FormInstance>();
+  function handleClickInput() {
+    setShowDatePicker(true);
+    setvisible(true);
+    setRange({ from: undefined, to: undefined });
+  }
 
   function handleOk(e: TMecanicoCreate & TClienteCreate) {
     forminstance?.resetFields();
@@ -62,45 +65,69 @@ export function OsPage() {
         cancelButtonProps={{ style: { display: "none" } }}
         okButtonProps={{ style: { display: "none" } }}
         destroyOnClose
-        title="Nova Ordem de Serviço"
+        title={!showDatePicker && "Nova Ordem de Serviço"}
       >
-        <OSFormCollection
-          onFinish={handleOk}
-          valuesAutocomplete={autoComplete}
-          onCancel={() => setvisible(false)}
-          onFormInstanceReady={(instance) => {
-            setforminstance(instance);
-          }}
-        />
+        {showDatePicker ? (
+          <DayPicker
+            mode="range"
+            locale={ptBR}
+            selected={range}
+            defaultMonth={month}
+            weekStartsOn={1}
+            onSelect={(e) => {
+              setRange(e);
+              if (e && e.from && e.to) {
+                setdtInicioDtFim({
+                  dtInicio: e && e.from && format(e!.from!, "yyyy-MM-dd"),
+                  dtFim: e && e.to && format(e!.to!, "yyyy-MM-dd"),
+                });
+                setvisibleSkeleton(true);
+                mutationGetFiltered.mutate();
+                setShowDatePicker(false);
+                setvisible(false);
+              }
+            }}
+          />
+        ) : (
+          <OSFormCollection
+            onFinish={handleOk}
+            valuesAutocomplete={autoComplete}
+            onCancel={() => setvisible(false)}
+            onFormInstanceReady={(instance) => {
+              setforminstance(instance);
+            }}
+          />
+        )}
       </Modal>
-      <DayPicker
-        mode="range"
-        locale={ptBR}
-        selected={range}
-        defaultMonth={month}
-        weekStartsOn={1}
-        onSelect={(e) => {
-          console.log(e && e.from && format(e!.from!, "yyyy-MM-dd"));
-          console.log(e && e.to && format(e!.to!, "yyyy-MM-dd"));
-
-          setRange(e);
-        }}
-      />
-      {/* <RangePicker
-        format={"DD/MM/YYYY"}
-        locale={pickerLocale}
-        onChange={(e) => {
-          setvisibleSkeleton(true);
-          e &&
-            e.length > 0 &&
-            setdtInicioDtFim({
-              dtInicio: e![0]!.format("YYYY-MM-DD"),
-              dtFim: e![1]!.format("YYYY-MM-DD"),
-            });
-
-          mutationGetFiltered.mutate();
-        }}
-      /> */}
+      {!showDatePicker && (
+        <div
+          style={{
+            // backgroundColor: "#804545",
+            width: "70%",
+            height: "30px",
+            overflowY: "scroll",
+            display: "flex",
+            flexDirection: "row",
+            flexWrap: "nowrap",
+            textWrap: "nowrap",
+            alignItems: "center",
+            gap: "4px",
+            marginLeft: "40px",
+          }}
+        >
+          <input
+            value={
+              range && range.from && range.to
+                ? format(range.from, "dd/MM/yyyy") +
+                  " - " +
+                  format(range.to, "dd/MM/yyyy")
+                : ""
+            }
+            style={{ width: "150px", textAlign: "center" }}
+            onClick={handleClickInput}
+          />
+        </div>
+      )}
     </>
   );
 }
