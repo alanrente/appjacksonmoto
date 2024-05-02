@@ -10,9 +10,11 @@ import {
 import { getAllMecanicos } from "../../services/mecanicos.service";
 import { getAllClientes } from "../../services/clientes.service";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { Alert } from "antd";
+import { Alert, FormInstance } from "antd";
 import moment from "moment-timezone";
 import { CardOSComponent } from "../../components/CardOS";
+import { DateRange } from "react-day-picker";
+import { addDays } from "date-fns";
 
 export function useOsPage() {
   const [visible, setvisible] = useState(false);
@@ -21,6 +23,24 @@ export function useOsPage() {
     dtInicio: moment().format("YYYY-MM-DD"),
     dtFim: moment().format("YYYY-MM-DD"),
   });
+  const defaultSelected: DateRange = {
+    from: new Date(),
+    to: addDays(new Date(), 0),
+  };
+  const [range, setRange] = useState<DateRange | undefined>(defaultSelected);
+  const [showDatePicker, setShowDatePicker] = useState(false);
+  const [forminstance, setforminstance] = useState<FormInstance>();
+
+  function handleClickInput() {
+    setShowDatePicker(true);
+    setvisible(true);
+    setRange({ from: undefined, to: undefined });
+  }
+
+  function handleOk(e: TMecanicoCreate & TClienteCreate) {
+    forminstance?.resetFields();
+    mutationOrdens.mutate(e);
+  }
 
   const queryClient = useQueryClient();
 
@@ -100,13 +120,19 @@ export function useOsPage() {
   }, []);
 
   return {
+    range,
     visible,
     autoComplete,
-    mutationOrdens,
+    showDatePicker,
     visibleSkeleton,
     mutationGetFiltered,
+    handleOk,
+    setRange,
     setvisible,
+    setforminstance,
+    handleClickInput,
     setdtInicioDtFim,
+    setShowDatePicker,
     setvisibleSkeleton,
     retornaArrayElement,
   };

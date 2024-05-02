@@ -2,52 +2,31 @@ import "./style.css";
 
 import { useOsPage } from "./hook";
 import { ptBR } from "date-fns/locale";
-import { CardOSComponent } from "../../components/CardOS";
 import { ScrollContainerWithButton } from "../../components/ScrollContainerWithButton";
-import { FormInstance, Input, Modal, Skeleton } from "antd";
-import { useState } from "react";
+import { Modal, Skeleton } from "antd";
 import { OSFormCollection } from "../../components/OsFormCollection";
-import {
-  TClienteCreate,
-  TMecanicoCreate,
-} from "../../interfaces/servico.interface";
-import { DateRange, DayPicker } from "react-day-picker";
-import { addDays, format } from "date-fns";
+
+import { DayPicker } from "react-day-picker";
+import { format } from "date-fns";
 
 export function OsPage() {
-  const month = new Date();
-
-  const defaultSelected: DateRange = {
-    from: month,
-    to: addDays(month, 0),
-  };
-
-  const [range, setRange] = useState<DateRange | undefined>(defaultSelected);
-  const [showDatePicker, setShowDatePicker] = useState(false);
-  const [forminstance, setforminstance] = useState<FormInstance>();
-
   const {
+    range,
     visible,
     autoComplete,
-    mutationOrdens,
+    showDatePicker,
     visibleSkeleton,
     mutationGetFiltered,
+    handleOk,
+    setRange,
     setvisible,
+    setforminstance,
+    handleClickInput,
     setdtInicioDtFim,
+    setShowDatePicker,
     setvisibleSkeleton,
     retornaArrayElement,
   } = useOsPage();
-
-  function handleClickInput() {
-    setShowDatePicker(true);
-    setvisible(true);
-    setRange({ from: undefined, to: undefined });
-  }
-
-  function handleOk(e: TMecanicoCreate & TClienteCreate) {
-    forminstance?.resetFields();
-    mutationOrdens.mutate(e);
-  }
 
   return (
     <>
@@ -72,7 +51,7 @@ export function OsPage() {
             mode="range"
             locale={ptBR}
             selected={range}
-            defaultMonth={month}
+            defaultMonth={new Date()}
             weekStartsOn={1}
             onSelect={(e) => {
               setRange(e);
