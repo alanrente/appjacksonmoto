@@ -2,7 +2,7 @@ import "./style.css";
 
 import { useOsPage } from "./hook";
 import { ptBR } from "date-fns/locale";
-import { ScrollContainerWithButton } from "../../components/ScrollContainerWithButton";
+import { ScrollContainerVertical } from "../../components/ScrollContainerWithButton";
 import { Modal, Skeleton } from "antd";
 import { OSFormCollection } from "../../components/OsFormCollection";
 
@@ -26,12 +26,13 @@ export function OsPage() {
     setShowDatePicker,
     setvisibleSkeleton,
     retornaArrayElement,
-  } = useOsPage();
+  } = useOsPage({});
 
   return (
     <>
-      <ScrollContainerWithButton
+      <ScrollContainerVertical
         onClick={() => setvisible(true)}
+        textButton="Nova Ordem de Serviço"
         children={
           visibleSkeleton
             ? [<Skeleton active key={"skeleton-os-page"} />]

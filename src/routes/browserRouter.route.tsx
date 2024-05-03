@@ -8,6 +8,7 @@ import { ServicosPage } from "../Pages/ServicosPage";
 import { IRouteObject, ERouteObject } from "../interfaces/router.interface";
 import validateInfosChildren from "../utils/validateInfosChildren.util";
 import { OsPage } from "../Pages/OsPage";
+import { Relatorio } from "../Pages/Relatorio";
 
 export const infosRouterChildren: IRouteObject = {
   [ERouteObject.index]: {
@@ -26,6 +27,12 @@ export const infosRouterChildren: IRouteObject = {
     path: ERouteObject.os,
     loader: protectedLoader,
     element: <OsPage />,
+  },
+  [ERouteObject.relatorio]: {
+    id: ERouteObject.relatorio,
+    path: ERouteObject.relatorio,
+    loader: protectedLoader,
+    element: <Relatorio />,
   },
   // [ERouteObject.servicos]: {
   //   id: "Serviços",

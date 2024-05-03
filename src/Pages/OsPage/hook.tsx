@@ -11,23 +11,31 @@ import { getAllMecanicos } from "../../services/mecanicos.service";
 import { getAllClientes } from "../../services/clientes.service";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { Alert, FormInstance } from "antd";
-import moment from "moment-timezone";
 import { CardOSComponent } from "../../components/CardOS";
 import { DateRange } from "react-day-picker";
-import { addDays } from "date-fns";
+import { addDays, format, subDays } from "date-fns";
 
-export function useOsPage() {
+type PropsUseOsPage = {
+  defaulDateRange?: DateRange;
+  relatorio?: boolean;
+};
+
+export function useOsPage({
+  defaulDateRange = {
+    from: subDays(new Date(), 7),
+    to: addDays(new Date(), 0),
+  },
+  relatorio = false,
+}: PropsUseOsPage) {
   const [visible, setvisible] = useState(false);
   const [visibleSkeleton, setvisibleSkeleton] = useState(false);
+
   const [dtInicioDtFim, setdtInicioDtFim] = useState({
-    dtInicio: moment().format("YYYY-MM-DD"),
-    dtFim: moment().format("YYYY-MM-DD"),
+    dtInicio:
+      defaulDateRange.from && format(defaulDateRange.from, "yyyy-MM-dd"),
+    dtFim: defaulDateRange.to && format(defaulDateRange.to, "yyyy-MM-dd"),
   });
-  const defaultSelected: DateRange = {
-    from: new Date(),
-    to: addDays(new Date(), 0),
-  };
-  const [range, setRange] = useState<DateRange | undefined>(defaultSelected);
+  const [range, setRange] = useState<DateRange | undefined>(defaulDateRange);
   const [showDatePicker, setShowDatePicker] = useState(false);
   const [forminstance, setforminstance] = useState<FormInstance>();
 
@@ -50,10 +58,12 @@ export function useOsPage() {
       const ordens: IOrdemServico[] = await getAllOs({
         dtInicio: dtInicioDtFim.dtInicio,
         dtFim: dtInicioDtFim.dtFim,
+        includeTotais: relatorio,
       });
       setvisibleSkeleton(false);
       return ordens;
     },
+    gcTime: 0,
   });
 
   const mutationGetFiltered = useMutation({
@@ -61,6 +71,7 @@ export function useOsPage() {
       return await getAllOs({
         dtInicio: dtInicioDtFim.dtInicio,
         dtFim: dtInicioDtFim.dtFim,
+        includeTotais: relatorio,
       });
     },
     onError: (err) => {
@@ -70,6 +81,7 @@ export function useOsPage() {
     onSuccess() {
       queryClient.invalidateQueries({ queryKey: ["ordens-servico"] });
     },
+    gcTime: 0,
   });
 
   const mutationOrdens = useMutation({
@@ -89,6 +101,7 @@ export function useOsPage() {
       setvisible(false);
       queryClient.invalidateQueries({ queryKey: ["ordens-servico"] });
     },
+    gcTime: 0,
   });
 
   const [autoComplete, setautoComplete] = useState<{
@@ -117,10 +130,12 @@ export function useOsPage() {
 
   useEffect(() => {
     handleGetAll();
+    setvisibleSkeleton(true);
   }, []);
 
   return {
     range,
+    ordens,
     visible,
     autoComplete,
     showDatePicker,

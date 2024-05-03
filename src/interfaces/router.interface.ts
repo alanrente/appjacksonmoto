@@ -5,6 +5,7 @@ export enum ERouteObject {
   servicos = "servicos",
   os = "os",
   home = "home",
+  relatorio = "relatorio",
   sair = "sair",
   index = "index",
 }
