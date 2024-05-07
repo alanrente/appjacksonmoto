@@ -1,8 +1,12 @@
 :root {
+  /* backgrounds  */
   --main-bg-color: #344463;
   --secundary-bg-color: #189fdd;
-  --font-white-color: #fff;
   --grey-light: #92929296;
+  --bg-blue-light: #6d91b177;
+
+  /* fonts */
+  --font-white-color: #fff;
 
   /* borders */
   --border-radius-s: 5px;

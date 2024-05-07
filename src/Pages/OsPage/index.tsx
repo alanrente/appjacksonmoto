@@ -1,41 +1,31 @@
 import "./style.css";
+
 import { useOsPage } from "./hook";
-import { CardOSComponent } from "../../components/CardOS";
-import { ScrollContainerWithButton } from "../../components/ScrollContainerWithButton";
-import { FormInstance, Modal, Skeleton } from "antd";
-import { useState } from "react";
+import { ScrollContainerVertical } from "../../components/ScrollContainerWithButton";
+import { Modal, Skeleton } from "antd";
 import { OSFormCollection } from "../../components/OsFormCollection";
-import {
-  TClienteCreate,
-  TMecanicoCreate,
-} from "../../interfaces/servico.interface";
 
 export function OsPage() {
-  const { ordens, setvisible, visible, autoComplete, mutationOrdens } =
-    useOsPage();
-
-  const [forminstance, setforminstance] = useState<FormInstance>();
-
-  function handleOk(e: TMecanicoCreate & TClienteCreate) {
-    forminstance?.resetFields();
-    mutationOrdens.mutate(e);
-  }
-
-  function retornaArrayElement() {
-    if (!ordens) return [<Skeleton active />];
-    if (ordens && ordens.length > 0)
-      return ordens.map((os, i) => (
-        <CardOSComponent os={os} key={i.toString()} />
-      ));
-
-    return [<>Não ha ordens cadastradas!</>];
-  }
+  const {
+    visible,
+    autoComplete,
+    visibleSkeleton,
+    handleOk,
+    setvisible,
+    setforminstance,
+    retornaArrayElement,
+  } = useOsPage();
 
   return (
     <>
-      <ScrollContainerWithButton
+      <ScrollContainerVertical
         onClick={() => setvisible(true)}
-        children={retornaArrayElement()}
+        textButton="Nova Ordem de Serviço"
+        children={
+          visibleSkeleton
+            ? [<Skeleton active key={"skeleton-os-page"} />]
+            : retornaArrayElement()
+        }
       />
       <Modal
         open={visible}
@@ -43,7 +33,7 @@ export function OsPage() {
         cancelButtonProps={{ style: { display: "none" } }}
         okButtonProps={{ style: { display: "none" } }}
         destroyOnClose
-        title="Nova Ordem de Serviço"
+        title={"Nova Ordem de Serviço"}
       >
         <OSFormCollection
           onFinish={handleOk}

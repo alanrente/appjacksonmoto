@@ -1,6 +1,7 @@
 import { useAuxConfirmWarning } from "../hooks/useAuxConfirmWarning";
 import { useConfirmWarning } from "../hooks/useConfirmWarning";
 import { useMessageAntd } from "../hooks/useMessageAntd";
+import { QueryOrdemServico } from "../interfaces/query.interface";
 import {
   IOrdemServico,
   ServicosAddOs,
@@ -13,11 +14,40 @@ import getBearerToken from "../utils/getBearerToken.util";
 import { api } from "./axios.service";
 import { message } from "antd";
 
-export async function getAllOs({ timeoutMs }: { timeoutMs?: number }) {
-  const { data } = await api.get("ordem-servicos", {
-    signal: newAbortSignal(timeoutMs),
-    headers: { Authorization: getBearerToken() },
-  });
+export async function getAllOs({
+  timeoutMs,
+  clienteId,
+  dtFim,
+  dtInicio,
+  includeTotais,
+  mecanicoId,
+}: { timeoutMs?: number } & QueryOrdemServico) {
+  const query: any = {
+    dtInicio,
+    dtFim,
+    clienteId,
+    includeTotais,
+    mecanicoId,
+  };
+
+  let queryStr = "?",
+    includeQuery = false;
+
+  for (const key in query) {
+    const element = query[key];
+    if (element) {
+      queryStr += key + "=" + element + "&";
+      includeQuery = true;
+    }
+  }
+
+  const { data } = await api.get(
+    `ordem-servicos${includeQuery ? queryStr : ""}`,
+    {
+      signal: newAbortSignal(timeoutMs),
+      headers: { Authorization: getBearerToken() },
+    }
+  );
 
   return data;
 }

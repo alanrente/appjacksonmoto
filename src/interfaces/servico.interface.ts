@@ -9,6 +9,8 @@ export interface IServico {
   servico: string;
   valor: number;
   osServico: IOsServico;
+  porcentagem: number;
+  valorPorcentagem: number;
 }
 export type IServicoSV = {
   servico: string;
@@ -43,6 +45,7 @@ export type TCliente = TClienteCreate & {
 
 export interface IOrdemServico {
   idOrdemServico: number;
+  totalMecanico?: number;
   dataExecucao: string;
   mecanicoId: number;
   clienteId: number;
@@ -50,6 +53,14 @@ export interface IOrdemServico {
   cliente: TCliente;
   servicos: IServico[];
 }
+
+export type IRelatorio = {
+  ordensServicos: IOrdemServico[];
+  totalMecanico: number;
+  totalOrdens: number;
+  totalOs: number;
+  totalServicos: number;
+};
 
 export type TOrdemServicoCreate = {
   servicos: IServico[];

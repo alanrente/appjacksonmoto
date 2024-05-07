@@ -1,0 +1,14 @@
+.horizontal-container {
+  overflow-x: scroll;
+  display: flex;
+  flex-wrap: nowrap;
+  gap: 10px;
+  align-items: center;
+  border-bottom: solid var(--main-bg-color) 2px;
+  border-top: solid var(--main-bg-color) 2px;
+  background-color: var(--main-bg-color);
+  position: absolute;
+
+  width: 80%;
+  height: 8%;
+}

@@ -2,17 +2,26 @@ import { Button } from "antd";
 import "./style.css";
 
 type Props = {
-  children: JSX.Element[];
+  children: JSX.Element | JSX.Element[];
   onClick?: () => void;
+  showButton?: boolean;
+  textButton?: string;
 };
 
-export function ScrollContainerWithButton({ children, onClick }: Props) {
+export function ScrollContainerVertical({
+  children,
+  onClick,
+  showButton = true,
+  textButton = "Novo",
+}: Props) {
   return (
     <div className="scroll-container__main">
       <div className="scroll-container__novo">
-        <Button onClick={onClick} prefixCls="scroll-container__button">
-          Nova Ordem de Serviço
-        </Button>
+        {showButton && (
+          <Button onClick={onClick} prefixCls="scroll-container__button">
+            {textButton}
+          </Button>
+        )}
       </div>
       <div className="scroll-container__cards">{children}</div>
     </div>
