@@ -54,6 +54,14 @@ export interface IOrdemServico {
   servicos: IServico[];
 }
 
+export type IRelatorio = {
+  ordensServicos: IOrdemServico[];
+  totalMecanico: number;
+  totalOrdens: number;
+  totalOs: number;
+  totalServicos: number;
+};
+
 export type TOrdemServicoCreate = {
   servicos: IServico[];
   mecanico: string;

@@ -1,81 +1,142 @@
 import "./style.css";
 import { ScrollContainerHorizontal } from "../../components/ScrollContainerHorizontal";
-import { useOsPage } from "../OsPage/hook";
-import { useRelatorio } from "./index.hook";
-import { format, subDays } from "date-fns";
+import { useRelatorio } from "./hook";
+import { format } from "date-fns";
 import { CalendarFilled } from "@ant-design/icons";
 import { FiTool, FiUser } from "react-icons/fi";
 import { GrMoney, GrUserWorker } from "react-icons/gr";
-import { Modal, Skeleton } from "antd";
+import { Button, Modal, Skeleton } from "antd";
 import { ScrollContainerVertical } from "../../components/ScrollContainerWithButton";
+import { DayPicker } from "react-day-picker";
+import { ptBR } from "date-fns/locale";
+import { MdHomeRepairService, MdOutlineAttachMoney } from "react-icons/md";
+import { toFixedAndComma } from "../../utils/constants.util";
 
 export function Relatorio() {
-  const { ordens, visibleSkeleton } = useOsPage({
-    defaulDateRange: { from: subDays(new Date(), 10), to: new Date() },
-    relatorio: true,
-  });
-  const { visible, setVisible, calcValores, handleClick, ordem } =
-    useRelatorio();
+  const {
+    ordem,
+    range,
+    ordens,
+    visible,
+    isLoading,
+    showDatePicker,
+    setVisible,
+    calcValores,
+    handleClick,
+    handleClickInput,
+    onSelectDayPicker,
+  } = useRelatorio();
 
   return (
     <>
       <ScrollContainerHorizontal>
-        <button>Primeiro</button>
-        <button>Segundo</button>
-        <button>Terceiro</button>
-        <button>Quarto</button>
+        <Button
+          className="input-relatorio"
+          value={
+            range && range.from && range.to
+              ? format(range.from, "dd/MM/yyyy") +
+                " - " +
+                format(range.to, "dd/MM/yyyy")
+              : ""
+          }
+          onClick={handleClickInput}
+        >
+          {range && range.from && range.to
+            ? format(range.from, "dd/MM/yyyy") +
+              " - " +
+              format(range.to, "dd/MM/yyyy")
+            : ""}
+        </Button>
+        {/* <button>Mecanico</button>
+        <button>Cliente</button> */}
       </ScrollContainerHorizontal>
-      <ScrollContainerVertical showButton={false}>
-        {visibleSkeleton ? (
-          <Skeleton active />
-        ) : (
-          <div className="div-main">
-            {ordens &&
-              ordens.map((ordem) => (
-                <>
-                  <div
-                    key={ordem.idOrdemServico.toString()}
-                    className="div-container"
-                    onClick={() => handleClick(ordem)}
-                  >
-                    <div>
-                      <CalendarFilled />
-                      {format(new Date(`${ordem.dataExecucao} `), "dd/MM/yyyy")}
-                    </div>
-
-                    <div>
-                      <FiUser />
-                      <span>{ordem.cliente.nome}</span>
-                    </div>
-                    <div>
-                      <GrUserWorker />
-                      <span>{ordem.mecanico.nome}</span>
-                    </div>
-                    <div>
-                      <FiTool />
-                      {ordem.servicos.length > 9 ? "9+" : ordem.servicos.length}
-                    </div>
-
-                    {/* <div>
-                  <GrMoney />
-                  {calcValores(servicos.map((servico) => servico.valor))}
-                </div> */}
-                  </div>
-                </>
-              ))}
+      {!isLoading && ordens && (
+        <div className="div-infos" key={"infos-relatorio"}>
+          <div>
+            <FiUser />
+            <span>
+              {new Set(ordens.ordensServicos.map((or) => or.cliente.nome)).size}
+            </span>
           </div>
-        )}
+          <div>
+            <GrUserWorker />
+            <span>
+              {
+                new Set(ordens.ordensServicos.map((or) => or.mecanico.nome))
+                  .size
+              }
+            </span>
+          </div>
+          <div>
+            <MdHomeRepairService />
+            <span>{ordens.totalServicos}</span>
+          </div>
+          <div>
+            <MdOutlineAttachMoney />
+            <span>{toFixedAndComma(ordens.totalOs)}</span>
+          </div>
+          <div>
+            <GrMoney />
+            <span>{toFixedAndComma(ordens.totalMecanico)}</span>
+          </div>
+        </div>
+      )}
+      <ScrollContainerVertical showButton={false}>
+        <div className="div-main">
+          {(isLoading || !ordens) && (
+            <Skeleton active key={"skeleton-os-page"} />
+          )}
+          {!isLoading &&
+            ordens &&
+            ordens.ordensServicos.map((ordem) => (
+              <>
+                <div
+                  key={ordem.idOrdemServico.toString()}
+                  className="div-container"
+                  onClick={() => handleClick(ordem)}
+                >
+                  <div>
+                    <CalendarFilled />
+                    {format(new Date(`${ordem.dataExecucao} `), "dd/MM/yyyy")}
+                  </div>
+
+                  <div>
+                    <FiUser />
+                    <span>{ordem.cliente.nome}</span>
+                  </div>
+                  <div>
+                    <GrUserWorker />
+                    <span>{ordem.mecanico.nome}</span>
+                  </div>
+                  <div>
+                    <FiTool />
+                    {ordem.servicos.length > 9 ? "9+" : ordem.servicos.length}
+                  </div>
+                </div>
+              </>
+            ))}
+        </div>
       </ScrollContainerVertical>
       <Modal
         open={visible}
         title={ordem?.idOrdemServico.toString().padStart(6, "0")}
-        closable
         destroyOnClose
-        onCancel={() => setVisible(false)}
+        closeIcon={false}
+        onCancel={() => !showDatePicker && setVisible(false)}
         cancelButtonProps={{ style: { display: "none" } }}
         okButtonProps={{ style: { display: "none" } }}
       >
-        {ordem && (
+        {showDatePicker && (
+          <DayPicker
+            mode="range"
+            locale={ptBR}
+            selected={range}
+            defaultMonth={new Date()}
+            weekStartsOn={1}
+            onSelect={onSelectDayPicker}
+          />
+        )}
+        {ordem && !showDatePicker && (
           <>
             <div>
               <CalendarFilled />
@@ -96,7 +157,7 @@ export function Relatorio() {
                 <>
                   {" "}
                   <GrMoney />
-                  <span>{ordem.totalMecanico}</span>
+                  <span>{toFixedAndComma(ordem.totalMecanico)}</span>
                 </>
               )}
             </div>
@@ -106,11 +167,12 @@ export function Relatorio() {
                   <div>
                     <FiTool />
                     <span>{servico.servico} - </span>
-                    <span>{servico.valor} - </span>
+                    <span>{toFixedAndComma(Number(servico.valor))} - </span>
                     <span>{servico.porcentagem * 100}%</span>
                     <span>
                       {servico.valorPorcentagem &&
-                        " - " + Number(servico.valorPorcentagem).toFixed(2)}
+                        " - " +
+                          toFixedAndComma(Number(servico.valorPorcentagem))}
                     </span>
                   </div>
                 );
@@ -118,8 +180,10 @@ export function Relatorio() {
             </div>
 
             <div>
-              <GrMoney />
-              {calcValores(ordem.servicos.map((servico) => servico.valor))}
+              <MdOutlineAttachMoney />
+              {toFixedAndComma(
+                calcValores(ordem.servicos.map((servico) => servico.valor))
+              )}
             </div>
           </>
         )}

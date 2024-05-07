@@ -23,9 +23,9 @@ export async function getAllOs({
   mecanicoId,
 }: { timeoutMs?: number } & QueryOrdemServico) {
   const query: any = {
-    clienteId,
-    dtFim,
     dtInicio,
+    dtFim,
+    clienteId,
     includeTotais,
     mecanicoId,
   };

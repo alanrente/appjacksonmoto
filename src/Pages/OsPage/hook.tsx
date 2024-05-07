@@ -12,38 +12,19 @@ import { getAllClientes } from "../../services/clientes.service";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { Alert, FormInstance } from "antd";
 import { CardOSComponent } from "../../components/CardOS";
-import { DateRange } from "react-day-picker";
-import { addDays, format, subDays } from "date-fns";
+import moment from "moment-timezone";
+import { DATA } from "../../utils/constants.util";
 
-type PropsUseOsPage = {
-  defaulDateRange?: DateRange;
-  relatorio?: boolean;
-};
-
-export function useOsPage({
-  defaulDateRange = {
-    from: subDays(new Date(), 7),
-    to: addDays(new Date(), 0),
-  },
-  relatorio = false,
-}: PropsUseOsPage) {
+export function useOsPage() {
   const [visible, setvisible] = useState(false);
   const [visibleSkeleton, setvisibleSkeleton] = useState(false);
 
   const [dtInicioDtFim, setdtInicioDtFim] = useState({
-    dtInicio:
-      defaulDateRange.from && format(defaulDateRange.from, "yyyy-MM-dd"),
-    dtFim: defaulDateRange.to && format(defaulDateRange.to, "yyyy-MM-dd"),
+    dtInicio: moment().format(DATA.US),
+    dtFim: moment().format(DATA.US),
   });
-  const [range, setRange] = useState<DateRange | undefined>(defaulDateRange);
-  const [showDatePicker, setShowDatePicker] = useState(false);
-  const [forminstance, setforminstance] = useState<FormInstance>();
 
-  function handleClickInput() {
-    setShowDatePicker(true);
-    setvisible(true);
-    setRange({ from: undefined, to: undefined });
-  }
+  const [forminstance, setforminstance] = useState<FormInstance>();
 
   function handleOk(e: TMecanicoCreate & TClienteCreate) {
     forminstance?.resetFields();
@@ -55,13 +36,13 @@ export function useOsPage({
   const { data: ordens } = useQuery({
     queryKey: ["ordens-servico"],
     queryFn: async () => {
-      const ordens: IOrdemServico[] = await getAllOs({
-        dtInicio: dtInicioDtFim.dtInicio,
-        dtFim: dtInicioDtFim.dtFim,
-        includeTotais: relatorio,
-      });
+      const { ordensServicos }: { ordensServicos: IOrdemServico[] } =
+        await getAllOs({
+          dtInicio: dtInicioDtFim.dtInicio,
+          dtFim: dtInicioDtFim.dtFim,
+        });
       setvisibleSkeleton(false);
-      return ordens;
+      return ordensServicos;
     },
     gcTime: 0,
   });
@@ -71,7 +52,7 @@ export function useOsPage({
       return await getAllOs({
         dtInicio: dtInicioDtFim.dtInicio,
         dtFim: dtInicioDtFim.dtFim,
-        includeTotais: relatorio,
+        includeTotais: false,
       });
     },
     onError: (err) => {
@@ -134,20 +115,15 @@ export function useOsPage({
   }, []);
 
   return {
-    range,
     ordens,
     visible,
     autoComplete,
-    showDatePicker,
     visibleSkeleton,
     mutationGetFiltered,
     handleOk,
-    setRange,
     setvisible,
     setforminstance,
-    handleClickInput,
     setdtInicioDtFim,
-    setShowDatePicker,
     setvisibleSkeleton,
     retornaArrayElement,
   };
