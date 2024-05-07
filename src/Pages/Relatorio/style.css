@@ -7,13 +7,13 @@
 
 .div-infos {
   width: 90%;
-  background-color: #c0c0c0b6;
+  background-color: var(--grey-light);
   position: relative;
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: space-evenly;
-  top: 48px;
+  top: 10%;
   left: 0;
   height: 40px;
   border-radius: var(--border-radius-m);

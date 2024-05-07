@@ -11,6 +11,7 @@ import { DayPicker } from "react-day-picker";
 import { ptBR } from "date-fns/locale";
 import { MdHomeRepairService, MdOutlineAttachMoney } from "react-icons/md";
 import { toFixedAndComma } from "../../utils/constants.util";
+import moment from "moment-timezone";
 
 export function Relatorio() {
   const {
@@ -97,7 +98,7 @@ export function Relatorio() {
                 >
                   <div>
                     <CalendarFilled />
-                    {format(new Date(`${ordem.dataExecucao} `), "dd/MM/yyyy")}
+                    {moment(`${ordem.dataExecucao}`).format("DD/MM/YYYY")}
                   </div>
 
                   <div>
