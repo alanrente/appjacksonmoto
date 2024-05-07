@@ -10,7 +10,7 @@ import { ScrollContainerVertical } from "../../components/ScrollContainerWithBut
 import { DayPicker } from "react-day-picker";
 import { ptBR } from "date-fns/locale";
 import { MdHomeRepairService, MdOutlineAttachMoney } from "react-icons/md";
-import { toFixedAndComma } from "../../utils/constants.util";
+import { DATA, toFixedAndComma } from "../../utils/constants.util";
 import moment from "moment-timezone";
 
 export function Relatorio() {
@@ -141,7 +141,7 @@ export function Relatorio() {
           <>
             <div>
               <CalendarFilled />
-              {format(new Date(`${ordem.dataExecucao} `), "dd/MM/yyyy")}
+              {moment(ordem.dataExecucao).format(DATA.BR)}
             </div>
 
             <div>
@@ -156,7 +156,6 @@ export function Relatorio() {
 
               {ordem.totalMecanico && (
                 <>
-                  {" "}
                   <GrMoney />
                   <span>{toFixedAndComma(ordem.totalMecanico)}</span>
                 </>

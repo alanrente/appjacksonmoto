@@ -16,8 +16,8 @@ export function useRelatorio() {
   const [ordem, setOrdem] = useState<IOrdemServico>();
   const [showDatePicker, setShowDatePicker] = useState(false);
   const [range, setRange] = useState<DateRange | undefined>({
-    from: new Date(moment().subtract(10, "days").format(DATA.US)),
-    to: new Date(moment().format(DATA.US)),
+    from: new Date(moment().subtract(11, "days").format(DATA.US)),
+    to: new Date(moment().add(1, "days").format(DATA.US)),
   });
 
   function onSelectDayPicker(e: any) {
