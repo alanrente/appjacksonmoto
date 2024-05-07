@@ -23,7 +23,6 @@ export function useLayout() {
   }
 
   useEffect(() => {
-    getStatusApi();
     document.addEventListener("mousedown", checkClickOutside);
 
     return () => document.removeEventListener("mousedown", checkClickOutside);
