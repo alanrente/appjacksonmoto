@@ -70,15 +70,15 @@ export function Relatorio() {
           </div>
           <div>
             <MdHomeRepairService />
-            <span>{ordens.totalServicos}</span>
+            <span>{ordens.totalServicos || 0}</span>
           </div>
           <div>
             <MdOutlineAttachMoney />
-            <span>{toFixedAndComma(ordens.totalOs)}</span>
+            <span>{toFixedAndComma(ordens.totalOs || 0)}</span>
           </div>
           <div>
             <GrMoney />
-            <span>{toFixedAndComma(ordens.totalMecanico)}</span>
+            <span>{toFixedAndComma(ordens.totalMecanico || 0)}</span>
           </div>
         </div>
       )}
@@ -157,7 +157,7 @@ export function Relatorio() {
               {ordem.totalMecanico && (
                 <>
                   <GrMoney />
-                  <span>{toFixedAndComma(ordem.totalMecanico)}</span>
+                  <span>{toFixedAndComma(ordem.totalMecanico || 0)}</span>
                 </>
               )}
             </div>
@@ -167,12 +167,11 @@ export function Relatorio() {
                   <div>
                     <FiTool />
                     <span>{servico.servico} - </span>
-                    <span>{toFixedAndComma(Number(servico.valor))} - </span>
+                    <span>{toFixedAndComma(servico.valor || 0)} - </span>
                     <span>{servico.porcentagem * 100}%</span>
                     <span>
                       {servico.valorPorcentagem &&
-                        " - " +
-                          toFixedAndComma(Number(servico.valorPorcentagem))}
+                        " - " + toFixedAndComma(servico.valorPorcentagem || 0)}
                     </span>
                   </div>
                 );
@@ -182,7 +181,7 @@ export function Relatorio() {
             <div>
               <MdOutlineAttachMoney />
               {toFixedAndComma(
-                calcValores(ordem.servicos.map((servico) => servico.valor))
+                calcValores(ordem.servicos.map((servico) => servico.valor) || 0)
               )}
             </div>
           </>
