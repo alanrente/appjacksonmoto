@@ -29,7 +29,7 @@ export const infosRouterChildren: IRouteObject = {
     element: <OsPage />,
   },
   [ERouteObject.relatorio]: {
-    id: ERouteObject.relatorio,
+    id: "Relatório",
     path: ERouteObject.relatorio,
     loader: protectedLoader,
     element: <Relatorio />,
