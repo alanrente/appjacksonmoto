@@ -6,7 +6,7 @@ import { CalendarFilled } from "@ant-design/icons";
 import { FiTool, FiUser } from "react-icons/fi";
 import { GrMoney, GrUserWorker } from "react-icons/gr";
 import { Button, Modal, Skeleton } from "antd";
-import { ScrollContainerVertical } from "../../components/ScrollContainerWithButton";
+import { ScrollContainerVertical } from "../../components/ScrollContainerVertical";
 import { DayPicker } from "react-day-picker";
 import { ptBR } from "date-fns/locale";
 import { MdHomeRepairService, MdOutlineAttachMoney } from "react-icons/md";
@@ -48,8 +48,8 @@ export function Relatorio() {
               format(range.to, "dd/MM/yyyy")
             : ""}
         </Button>
-        {/* <button>Mecanico</button>
-        <button>Cliente</button> */}
+        {/* <button>Mecanico</button> */}
+        {/* <button>Cliente</button> */}
       </ScrollContainerHorizontal>
       {!isLoading && ordens && (
         <div className="div-infos" key={"infos-relatorio"}>

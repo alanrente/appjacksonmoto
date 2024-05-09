@@ -1,7 +1,7 @@
 import "./style.css";
 
 import { useOsPage } from "./hook";
-import { ScrollContainerVertical } from "../../components/ScrollContainerWithButton";
+import { ScrollContainerVertical } from "../../components/ScrollContainerVertical";
 import { Modal, Skeleton } from "antd";
 import { OSFormCollection } from "../../components/OsFormCollection";
 

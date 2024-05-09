@@ -1,14 +1,42 @@
 .horizontal-container {
   overflow-x: scroll;
+  overflow-y: hidden;
   display: flex;
   flex-wrap: nowrap;
   gap: 10px;
   align-items: center;
+  justify-content: center;
   border-bottom: solid var(--main-bg-color) 2px;
   border-top: solid var(--main-bg-color) 2px;
   background-color: var(--main-bg-color);
   position: absolute;
 
   width: 80%;
+
   height: 8%;
+}
+@media (min-width: 81%) {
+  .horizontal-container {
+    overflow: hidden;
+  }
+}
+
+.horizontal-container::-webkit-scrollbar {
+  height: 10px;
+  width: 10px;
+}
+
+.horizontal-container::-webkit-scrollbar-track {
+  /* background: #fff; */
+}
+
+/* Handle */
+.horizontal-container::-webkit-scrollbar-thumb {
+  border-radius: 20px;
+  background: #888;
+}
+
+/* Handle on hover */
+.horizontal-container::-webkit-scrollbar-thumb:hover {
+  background: #555;
 }
