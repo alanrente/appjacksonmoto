@@ -3,31 +3,25 @@
   overflow-y: hidden;
   display: flex;
   flex-wrap: nowrap;
-  gap: 10px;
+  gap: 5px;
   align-items: center;
-  justify-content: center;
+  justify-content: space-between;
   border-bottom: solid var(--main-bg-color) 2px;
   border-top: solid var(--main-bg-color) 2px;
   background-color: var(--main-bg-color);
   position: absolute;
 
   width: 80%;
-
   height: 8%;
 }
-@media (min-width: 81%) {
-  .horizontal-container {
-    overflow: hidden;
-  }
+
+.horizontal-container-children {
+  justify-content: center;
 }
 
 .horizontal-container::-webkit-scrollbar {
-  height: 10px;
+  height: 0;
   width: 10px;
-}
-
-.horizontal-container::-webkit-scrollbar-track {
-  /* background: #fff; */
 }
 
 /* Handle */

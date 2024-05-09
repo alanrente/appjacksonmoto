@@ -31,23 +31,18 @@ export function Relatorio() {
   return (
     <>
       <ScrollContainerHorizontal>
-        <Button
-          className="input-relatorio"
-          value={
-            range && range.from && range.to
-              ? format(range.from, "dd/MM/yyyy") +
+        {range && range.from && range.to ? (
+          <Button className="input-relatorio" onClick={handleClickInput}>
+            {range &&
+              range.from &&
+              range.to &&
+              format(range.from, "dd/MM/yyyy") +
                 " - " +
-                format(range.to, "dd/MM/yyyy")
-              : ""
-          }
-          onClick={handleClickInput}
-        >
-          {range && range.from && range.to
-            ? format(range.from, "dd/MM/yyyy") +
-              " - " +
-              format(range.to, "dd/MM/yyyy")
-            : ""}
-        </Button>
+                format(range.to, "dd/MM/yyyy")}
+          </Button>
+        ) : (
+          <></>
+        )}
         {/* <button>Mecanico</button> */}
         {/* <button>Cliente</button> */}
       </ScrollContainerHorizontal>
@@ -129,6 +124,7 @@ export function Relatorio() {
       >
         {showDatePicker && (
           <DayPicker
+            showOutsideDays
             mode="range"
             locale={ptBR}
             selected={range}

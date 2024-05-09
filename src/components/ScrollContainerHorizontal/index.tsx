@@ -5,5 +5,15 @@ export function ScrollContainerHorizontal({
 }: {
   children: JSX.Element | JSX.Element[];
 }) {
-  return <div className="horizontal-container">{children}</div>;
+  const isArray = Array.isArray(children);
+
+  return (
+    <div
+      className={`horizontal-container${
+        !isArray ? " horizontal-container-children" : ""
+      }`}
+    >
+      {children}
+    </div>
+  );
 }
