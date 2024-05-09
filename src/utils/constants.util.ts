@@ -13,6 +13,8 @@ export enum DATA {
   US_dateFns = "yyyy-MM-dd",
 }
 
-export function toFixedAndComma(n: number, fractionDigits = 2) {
-  return n.toFixed(fractionDigits).replace(".", ",");
+export function toFixedAndComma(n: number | string, fractionDigits = 2) {
+  const numero = Number(n);
+  if (isNaN(numero)) return "0";
+  return numero.toFixed(fractionDigits).replace(".", ",");
 }
