@@ -154,12 +154,12 @@ export function Relatorio() {
               <GrUserWorker />
               <span>{ordem.mecanico.nome}</span>
 
-              {ordem.totalMecanico && (
+              {ordem.totalMecanico ? (
                 <>
                   <GrMoney />
                   <span>{toFixedAndComma(ordem.totalMecanico || 0)}</span>
                 </>
-              )}
+              ) : null}
             </div>
             <div>
               {ordem.servicos.map((servico) => {

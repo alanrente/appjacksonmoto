@@ -15,6 +15,6 @@ export enum DATA {
 
 export function toFixedAndComma(n: number | string, fractionDigits = 2) {
   const numero = Number(n);
-  if (isNaN(numero)) return n;
+  if (isNaN(numero)) return "0";
   return numero.toFixed(fractionDigits).replace(".", ",");
 }
