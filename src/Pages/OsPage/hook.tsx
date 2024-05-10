@@ -20,7 +20,7 @@ export function useOsPage() {
   const [visibleSkeleton, setvisibleSkeleton] = useState(false);
 
   const [dtInicioDtFim, setdtInicioDtFim] = useState({
-    dtInicio: moment().format(DATA.US),
+    dtInicio: moment().subtract(10, "days").format(DATA.US),
     dtFim: moment().format(DATA.US),
   });
 
