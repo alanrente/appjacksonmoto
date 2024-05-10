@@ -5,7 +5,7 @@ import { format } from "date-fns";
 import { CalendarFilled } from "@ant-design/icons";
 import { FiTool, FiUser } from "react-icons/fi";
 import { GrMoney, GrUserWorker } from "react-icons/gr";
-import { Button, Modal, Skeleton } from "antd";
+import { Button, Modal, Select, Skeleton } from "antd";
 import { ScrollContainerVertical } from "../../components/ScrollContainerVertical";
 import { DayPicker } from "react-day-picker";
 import { ptBR } from "date-fns/locale";
@@ -21,9 +21,12 @@ export function Relatorio() {
     visible,
     isLoading,
     showDatePicker,
+    optionsClientes,
+    optionsMecanicos,
     setVisible,
     calcValores,
     handleClick,
+    onSelectCliente,
     handleClickInput,
     onSelectDayPicker,
   } = useRelatorio();
@@ -40,6 +43,26 @@ export function Relatorio() {
                 " - " +
                 format(range.to, "dd/MM/yyyy")}
           </Button>
+        ) : (
+          <></>
+        )}
+        {optionsMecanicos ? (
+          <Select
+            onSelect={(e) => onSelectCliente(e, "mecanicoId")}
+            style={{ minWidth: "100px" }}
+            defaultValue={"0"}
+            options={optionsMecanicos}
+          />
+        ) : (
+          <></>
+        )}
+        {optionsClientes ? (
+          <Select
+            onSelect={(e) => onSelectCliente(e, "clienteId")}
+            style={{ minWidth: "100px" }}
+            defaultValue={"0"}
+            options={optionsClientes}
+          />
         ) : (
           <></>
         )}
@@ -117,6 +140,7 @@ export function Relatorio() {
         open={visible}
         title={ordem?.idOrdemServico.toString().padStart(6, "0")}
         destroyOnClose
+        centered
         closeIcon={false}
         onCancel={() => !showDatePicker && setVisible(false)}
         cancelButtonProps={{ style: { display: "none" } }}
