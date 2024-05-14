@@ -12,6 +12,9 @@
 .card-os__mecanico {
   margin: 4px 10px;
   font-size: larger;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   /* background-color: #868d92; */
 }
 

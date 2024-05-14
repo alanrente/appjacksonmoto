@@ -3,6 +3,7 @@ import { IServico } from "../../interfaces/servico.interface";
 import { Divider, Modal } from "antd";
 import { MdDelete, MdEdit } from "react-icons/md";
 import { useState } from "react";
+import { toFixedAndComma } from "../../utils/constants.util";
 
 interface IProps {
   servicos: IServico[];
@@ -35,7 +36,7 @@ export function SumServicosComponent({ servicos, args, show }: IProps) {
             {/* <MdEdit /> */}
             <div className="sum-servicos__descricao-valor">
               <span>{`${serv.servico}`.slice(0, 35)}</span>
-              <span>{serv.osServico.valor}</span>
+              <span>{toFixedAndComma(serv.osServico.valor)}</span>
             </div>
             {/* <MdDelete onClick={() => handleDelete(serv)} /> */}
           </div>
@@ -44,9 +45,11 @@ export function SumServicosComponent({ servicos, args, show }: IProps) {
       <Divider type="horizontal" prefixCls="sum-servicos__divider" />
       <span className="sum-servicos__soma">
         {servicos.length > 0 &&
-          servicos
-            .map((serv) => serv.osServico.valor)
-            .reduce((a, b) => Number(a) + Number(b))}
+          toFixedAndComma(
+            servicos
+              .map((serv) => serv.osServico.valor)
+              .reduce((a, b) => Number(a) + Number(b))
+          )}
       </span>
       <Modal
         open={showModal}

@@ -51,6 +51,7 @@ export interface IOrdemServico {
   clienteId: number;
   mecanico: TMecanico;
   cliente: TCliente;
+  status: number;
   servicos: IServico[];
 }
 

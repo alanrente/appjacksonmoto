@@ -4,13 +4,19 @@ import { useRelatorio } from "./hook";
 import { format } from "date-fns";
 import { CalendarFilled } from "@ant-design/icons";
 import { FiTool, FiUser } from "react-icons/fi";
+import { FaLock, FaUnlock } from "react-icons/fa";
 import { GrMoney, GrUserWorker } from "react-icons/gr";
 import { Button, Modal, Select, Skeleton } from "antd";
 import { ScrollContainerVertical } from "../../components/ScrollContainerVertical";
 import { DayPicker } from "react-day-picker";
 import { ptBR } from "date-fns/locale";
+import { GoIssueReopened } from "react-icons/go";
 import { MdHomeRepairService, MdOutlineAttachMoney } from "react-icons/md";
-import { DATA, toFixedAndComma } from "../../utils/constants.util";
+import {
+  DATA,
+  tagIdOrdemServico,
+  toFixedAndComma,
+} from "../../utils/constants.util";
 import moment from "moment-timezone";
 
 export function Relatorio() {
@@ -20,6 +26,7 @@ export function Relatorio() {
     ordens,
     visible,
     isLoading,
+    mutReabrirOs,
     showDatePicker,
     optionsClientes,
     optionsMecanicos,
@@ -138,7 +145,6 @@ export function Relatorio() {
       </ScrollContainerVertical>
       <Modal
         open={visible}
-        title={ordem?.idOrdemServico.toString().padStart(6, "0")}
         destroyOnClose
         centered
         closeIcon={false}
@@ -159,6 +165,27 @@ export function Relatorio() {
         )}
         {ordem && !showDatePicker && (
           <>
+            <div
+              style={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "space-between",
+              }}
+            >
+              <div>
+                {!!ordem.status ? <FaUnlock /> : <FaLock />}
+                {tagIdOrdemServico(ordem.idOrdemServico)}
+              </div>
+              {!ordem.status && (
+                <Button
+                  onClick={async () => {
+                    await mutReabrirOs.mutateAsync(ordem.idOrdemServico);
+                  }}
+                >
+                  <GoIssueReopened />
+                </Button>
+              )}
+            </div>
             <div>
               <CalendarFilled />
               {moment(ordem.dataExecucao).format(DATA.BR)}

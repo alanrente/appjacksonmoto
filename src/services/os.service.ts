@@ -113,3 +113,26 @@ export async function addServicosInOs(servicosAndIdOS: ServicosAddOs) {
       useMessageAntd({ content: `${err.message}`, type: "error" })
     );
 }
+
+export async function closeOrReopen({
+  id,
+  openOrReopen,
+}: {
+  id: number;
+  openOrReopen: "fechar" | "reabrir";
+}) {
+  const body = {
+    fechar: { status: 0 }, // fechar
+    reabrir: { status: 1 }, // reabrir
+  };
+
+  const { data } = await api.patch(
+    `/ordem-servicos/${id}`,
+    body[openOrReopen],
+    {
+      headers: { Authorization: getBearerToken() },
+    }
+  );
+
+  return data;
+}
