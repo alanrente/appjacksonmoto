@@ -30,6 +30,7 @@ export function useCardOS(os: IOrdemServico) {
     },
     async onSuccess() {
       setFecharOs(false);
+      setopenModal(false);
       message.success(`OS: ${tagIdOrdemServico(os.idOrdemServico)} fechada!`);
       setLoading(false);
       await queryClient.invalidateQueries({ queryKey: ["ordens-servico"] });

@@ -7,10 +7,10 @@ import {
 } from "../../interfaces/servico.interface";
 import { DateRange } from "react-day-picker";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { getAllOs } from "../../services/os.service";
+import { closeOrReopen, getAllOs } from "../../services/os.service";
 import moment from "moment-timezone";
-import { DATA } from "../../utils/constants.util";
-import { Alert } from "antd";
+import { DATA, tagIdOrdemServico } from "../../utils/constants.util";
+import { Alert, message } from "antd";
 import { format } from "date-fns";
 
 export function useRelatorio() {
@@ -31,6 +31,25 @@ export function useRelatorio() {
   const [range, setRange] = useState<DateRange | undefined>({
     from: new Date(moment().subtract(10, "days").format()),
     to: new Date(moment().format()),
+  });
+
+  const mutReabrirOs = useMutation({
+    async mutationFn(idOrdemServico: number) {
+      setIsLoading(true);
+      await closeOrReopen({ id: idOrdemServico, openOrReopen: "reabrir" });
+    },
+    onError(err) {
+      setIsLoading(false);
+      setVisible(false);
+      message.error(err.message);
+    },
+    async onSuccess(data, variables) {
+      await queryClient.invalidateQueries({ queryKey: ["ordens-relatorio"] });
+      setIsLoading(false);
+      setVisible(false);
+      message.success(`OS: ${tagIdOrdemServico(variables)} reaberta!`);
+    },
+    gcTime: 0,
   });
 
   function setLoadSetVisibleAndCallMutationFilter() {
@@ -149,6 +168,7 @@ export function useRelatorio() {
     ordens,
     visible,
     isLoading,
+    mutReabrirOs,
     showDatePicker,
     optionsClientes,
     optionsMecanicos,
