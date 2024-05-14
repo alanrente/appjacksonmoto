@@ -6,12 +6,17 @@ import { Button, Modal } from "antd";
 import { SumServicosComponent } from "../SumServicos";
 import { useCardOS } from "./hook";
 import { FormAddServicoOs } from "../FormAddServicoOs";
+import { GrClose } from "react-icons/gr";
 
 export function CardOSComponent({ os }: { os: IOrdemServico }) {
   const {
+    loading,
     visible,
+    fecharOs,
     openModal,
     titleModal,
+    mutFecharOs,
+    setFecharOs,
     handleClick,
     setopenModal,
     handleVisible,
@@ -21,8 +26,9 @@ export function CardOSComponent({ os }: { os: IOrdemServico }) {
   return (
     <div className="card-os">
       <div className="card-os__mecanico">
-        {tagIdOrdemServico(os.idOrdemServico)} - {os.mecanico.nome} -{" "}
-        {os.cliente.placa}
+        {tagIdOrdemServico(os.idOrdemServico)} - {os.mecanico.nome}
+        {os.cliente.placa ? ` - ${os.cliente.placa}` : ` - ${os.cliente.nome}`}
+        <GrClose onClick={() => handleClick(true)} />
       </div>
       <div className="card-os__buttons">
         <Button prefixCls="card-os__button" onClick={handleVisible}>
@@ -41,19 +47,37 @@ export function CardOSComponent({ os }: { os: IOrdemServico }) {
           open={openModal}
           onCancel={() => {
             setopenModal(false);
+            setFecharOs(false);
           }}
-          okButtonProps={{ style: { display: "none" } }}
-          cancelButtonProps={{ style: { display: "none" } }}
+          onOk={async () => {
+            await mutFecharOs.mutateAsync();
+          }}
+          confirmLoading={loading}
+          okText={fecharOs && "Sim"}
+          cancelText={fecharOs && "Não"}
+          okButtonProps={fecharOs ? undefined : { style: { display: "none" } }}
+          cancelButtonProps={
+            fecharOs ? undefined : { style: { display: "none" } }
+          }
           destroyOnClose
           closeIcon={false}
-          title={titleModal}
+          title={
+            <>
+              {titleModal}
+              {fecharOs && "Deseja fechar essa Ordem de Serviço?"}
+            </>
+          }
         >
-          <FormAddServicoOs
-            idOrdemServico={os.idOrdemServico}
-            onCloseModal={() => {
-              setopenModal(false);
-            }}
-          />
+          {fecharOs ? (
+            <></>
+          ) : (
+            <FormAddServicoOs
+              idOrdemServico={os.idOrdemServico}
+              onCloseModal={() => {
+                setopenModal(false);
+              }}
+            />
+          )}
         </Modal>
       )}
     </div>

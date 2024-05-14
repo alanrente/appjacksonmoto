@@ -1,6 +1,6 @@
 import "./style.css";
 import { IServico } from "../../interfaces/servico.interface";
-import { Button, Divider, Modal } from "antd";
+import { Divider, Modal } from "antd";
 import { MdDelete, MdEdit } from "react-icons/md";
 import { useState } from "react";
 import { toFixedAndComma } from "../../utils/constants.util";
