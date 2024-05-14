@@ -2,7 +2,7 @@
   margin-top: 1.5rem;
   display: flex;
   flex-direction: column;
-  align-items: flex-end;
+  align-items: center;
   /* gap: 1.5rem; */
   justify-content: center;
   text-transform: capitalize;
@@ -17,8 +17,8 @@
   align-items: center;
   justify-content: space-between;
 
-  width: 100%;
-  margin: 0.8rem 0;
+  width: 90%;
+  margin: 0.3rem 0;
 
   svg {
     width: 2.5rem;
@@ -29,7 +29,7 @@
 
 .sum-servicos__descricao-valor {
   /* background-color: #8f7b7b; */
-  width: 70%;
+  width: 100%;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -41,6 +41,9 @@
 }
 
 .sum-servicos__soma {
-  margin-right: 4rem;
   font-weight: 600;
+  width: 90%;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
 }
