@@ -12,6 +12,8 @@ import moment from "moment-timezone";
 import { DATA, tagIdOrdemServico } from "../../utils/constants.util";
 import { Alert, message } from "antd";
 import { format } from "date-fns";
+import { FiUser } from "react-icons/fi";
+import { GrUserWorker } from "react-icons/gr";
 
 export function useRelatorio() {
   const queryClient = useQueryClient();
@@ -21,9 +23,9 @@ export function useRelatorio() {
     clienteId?: number;
   }>();
   const [optionsMecanicos, setOptionsMecanicos] =
-    useState<{ value: string; label: string }[]>();
+    useState<{ value: string; label: string | JSX.Element }[]>();
   const [optionsClientes, setOptionsClientes] =
-    useState<{ value: string; label: string }[]>();
+    useState<{ value: string; label: string | JSX.Element }[]>();
   const [isLoading, setIsLoading] = useState(false);
   const [visible, setVisible] = useState(false);
   const [ordem, setOrdem] = useState<IOrdemServico>();
@@ -143,23 +145,40 @@ export function useRelatorio() {
     });
 
     const lista = {
-      mecanicos: Array.from(newSetOfMecanicos).map((strJsonMec) => ({
-        label: (JSON.parse(strJsonMec) as TMecanico).nome.toString(),
-        value: (JSON.parse(strJsonMec) as TMecanico).idMecanico.toString(),
-      })),
-      clientes: Array.from(newSetOfClientes).map((strJsonClient) => ({
-        label: (JSON.parse(strJsonClient) as TCliente).nome.toString(),
-        value: (JSON.parse(strJsonClient) as TCliente).idCliente.toString(),
-      })),
+      mecanicos: [
+        {
+          label: (
+            <>
+              <GrUserWorker />
+              Todos
+            </>
+          ),
+          value: "0",
+        },
+        ...Array.from(newSetOfMecanicos).map((strJsonMec) => ({
+          label: (JSON.parse(strJsonMec) as TMecanico).nome.toString(),
+          value: (JSON.parse(strJsonMec) as TMecanico).idMecanico.toString(),
+        })),
+      ],
+      clientes: [
+        {
+          label: (
+            <>
+              <FiUser />
+              Todos
+            </>
+          ),
+          value: "0",
+        },
+        ...Array.from(newSetOfClientes).map((strJsonClient) => ({
+          label: (JSON.parse(strJsonClient) as TCliente).nome.toString(),
+          value: (JSON.parse(strJsonClient) as TCliente).idCliente.toString(),
+        })),
+      ],
     };
 
-    const optionTodos: { label: string; value: string } = {
-      label: "Todos",
-      value: "0",
-    };
-
-    setOptionsClientes([optionTodos, ...lista.clientes]);
-    setOptionsMecanicos([optionTodos, ...lista.mecanicos]);
+    setOptionsClientes([...lista.clientes]);
+    setOptionsMecanicos([...lista.mecanicos]);
   }, [ordens]);
 
   return {

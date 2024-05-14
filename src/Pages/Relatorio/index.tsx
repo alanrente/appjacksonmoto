@@ -53,16 +53,7 @@ export function Relatorio() {
         ) : (
           <></>
         )}
-        {optionsMecanicos ? (
-          <Select
-            onSelect={(e) => onSelectCliente(e, "mecanicoId")}
-            style={{ minWidth: "100px" }}
-            defaultValue={"0"}
-            options={optionsMecanicos}
-          />
-        ) : (
-          <></>
-        )}
+
         {optionsClientes ? (
           <Select
             onSelect={(e) => onSelectCliente(e, "clienteId")}
@@ -73,8 +64,17 @@ export function Relatorio() {
         ) : (
           <></>
         )}
-        {/* <button>Mecanico</button> */}
-        {/* <button>Cliente</button> */}
+
+        {optionsMecanicos ? (
+          <Select
+            onSelect={(e) => onSelectCliente(e, "mecanicoId")}
+            style={{ minWidth: "100px" }}
+            defaultValue={"0"}
+            options={optionsMecanicos}
+          />
+        ) : (
+          <></>
+        )}
       </ScrollContainerHorizontal>
       {!isLoading && ordens && (
         <div className="div-infos" key={"infos-relatorio"}>
