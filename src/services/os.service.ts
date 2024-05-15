@@ -136,3 +136,9 @@ export async function closeOrReopen({
 
   return data;
 }
+
+export async function getOpenOnly() {
+  const { data } = await api.get(`ordem-servicos/abertos`);
+
+  return data;
+}
