@@ -4,7 +4,7 @@ import { Layout } from "../Pages/Layout";
 import LoginComponent from "../components/Login";
 import { protectedLoader } from "../contexts/protectedLoader.context";
 import { HomePage } from "../Pages/HomePage";
-import { ServicosPage } from "../Pages/ServicosPage";
+import { ServicosPage } from "../Pages/Servicos";
 import { IRouteObject, ERouteObject } from "../interfaces/router.interface";
 import validateInfosChildren from "../utils/validateInfosChildren.util";
 import { OsPage } from "../Pages/OsPage";
@@ -34,12 +34,12 @@ export const infosRouterChildren: IRouteObject = {
     loader: protectedLoader,
     element: <Relatorio />,
   },
-  // [ERouteObject.servicos]: {
-  //   id: "Serviços",
-  //   path: "servicos",
-  //   loader: protectedLoader,
-  //   element: <ServicosPage />,
-  // },
+  [ERouteObject.servicos]: {
+    id: "Serviços",
+    path: "servicos",
+    loader: protectedLoader,
+    element: <ServicosPage />,
+  },
   [ERouteObject.sair]: {
     id: "Sair",
     path: "logout",

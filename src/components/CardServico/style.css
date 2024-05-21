@@ -1,26 +1,29 @@
 .card-servico {
   display: flex;
-  height: 70px;
   flex-direction: row;
-  gap: 0.5rem;
-  margin: 0.5rem;
-  padding: 1rem;
+  justify-content: space-between;
+  margin: 0.5rem 0;
 
-  background-color: #b8b8b8;
+  width: 95%;
+  background-color: var(--bg-silver-light);
 }
 
 .card-servico__valores {
   display: flex;
   flex-direction: column;
-  background-color: #9c9c9c;
+  /* background-color: #9c9c9c; */
   text-transform: uppercase;
-  justify-content: space-between;
-  width: 100%;
+  margin-left: 0.5rem;
 }
+
 .card-servico__botoes {
-  display: flex;
-  background-color: #8d2b2b;
-  height: auto;
-  width: 100%;
-  justify-content: space-between;
+  margin-right: 0.5rem;
+  /* background-color: dimgrey; */
+  height: 25px;
+  width: 20px;
+}
+
+.card-servico__botoes > svg {
+  margin: 0;
+  fill: var(--main-bg-color);
 }

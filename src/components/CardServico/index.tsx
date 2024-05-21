@@ -1,28 +1,34 @@
+import { IServico } from "../../interfaces/servico.interface";
 import "./style.css";
+import { toFixedAndComma } from "../../utils/constants.util";
+import { MouseEventHandler } from "react";
+import { RepositoryIcons } from "../../assets/icons/repository";
 
 export function CardServico({
-  strServico,
-  valor,
+  servico,
+  onclick,
 }: {
-  strServico: string;
-  valor: string | number;
+  servico: IServico;
+  onclick?: MouseEventHandler;
 }) {
+  const { Edit } = RepositoryIcons();
   return (
     <div className="card-servico">
       <div className="card-servico__valores">
         <div>
-          <label>Serviço: </label>
-          <span>{strServico}</span>
+          <span>{servico.servico}</span>
         </div>
         <div>
           <label>Valor: </label>
-          <span>{valor}</span>
+          <span>{toFixedAndComma(servico.valor)}</span>
+        </div>
+        <div>
+          <label>Repasse(%): </label>
+          <span>{servico.porcentagem * 100}%</span>
         </div>
       </div>
-      <div className="card-servico__botoes">
-        <button>Editar</button>
-        <button>Excluir</button>
-      </div>
+
+      <Edit onClick={onclick} className="card-servico__botoes" />
     </div>
   );
 }
