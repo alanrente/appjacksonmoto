@@ -14,6 +14,12 @@ import { Alert, FormInstance } from "antd";
 import { CardOSComponent } from "../../components/CardOS";
 
 export function useOsPage() {
+  const queryClient = useQueryClient();
+
+  const [autoComplete, setautoComplete] = useState<{
+    mecanicos: TMecanico[];
+    clientes: TCliente[];
+  }>({ mecanicos: [], clientes: [] });
   const [visible, setvisible] = useState(false);
   const [visibleSkeleton, setvisibleSkeleton] = useState(false);
 
@@ -23,8 +29,6 @@ export function useOsPage() {
     forminstance?.resetFields();
     mutationOrdens.mutate(e);
   }
-
-  const queryClient = useQueryClient();
 
   const { data: ordens } = useQuery({
     queryKey: ["ordens-servico"],
@@ -56,11 +60,6 @@ export function useOsPage() {
     },
     gcTime: 0,
   });
-
-  const [autoComplete, setautoComplete] = useState<{
-    mecanicos: TMecanico[];
-    clientes: TCliente[];
-  }>({ mecanicos: [], clientes: [] });
 
   async function handleGetAll() {
     const mecanicos = await getAllMecanicos();

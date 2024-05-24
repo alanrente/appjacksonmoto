@@ -138,7 +138,11 @@ export async function closeOrReopen({
 }
 
 export async function getOpenOnly() {
-  const { data } = await api.get(`ordem-servicos/abertos`);
+  const { data } = await api.get(`ordem-servicos/abertos`, {
+    headers: {
+      Authorization: getBearerToken(),
+    },
+  });
 
   return data;
 }
