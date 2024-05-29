@@ -6,7 +6,14 @@ import { ModalAntd } from "../../instances/ModalAntd";
 import { RepositoryIcons } from "../../assets/icons/repository";
 
 export function ServicosPage() {
-  const { servs, states, setStates, handleChange } = useServicosPage();
+  const {
+    servs,
+    states,
+    setStates,
+    handleChange,
+    handleOk,
+    porcentagemIsValid,
+  } = useServicosPage();
   const { Service } = RepositoryIcons();
   return (
     <>
@@ -37,9 +44,16 @@ export function ServicosPage() {
                 {states.servico?.idServico}
               </Space>
             ),
+            onOk: handleOk,
+            okText: "Salvar",
+            okButtonProps: {
+              disabled:
+                states.servico &&
+                !porcentagemIsValid(states.servico.porcentagem),
+            },
+            confirmLoading: states.loading,
             open: states.openModal,
             destroyOnClose: true,
-            okText: "Salvar",
             cancelText: "Cancelar",
             closeIcon: false,
             onCancel: () => {
@@ -47,25 +61,35 @@ export function ServicosPage() {
             },
           }}
         >
-          <Input
-            id="servico"
-            type="text"
-            value={states.servico?.servico}
-            onChange={handleChange}
-          />
-          <Input
-            id="valor"
-            type="number"
-            value={states.servico?.valor}
-            onChange={handleChange}
-          />
-          <Input
-            id="porcentagem"
-            type="number"
-            status={states.inputPorcentagem}
-            value={states.servico!.porcentagem}
-            onChange={handleChange}
-          />
+          <Space direction="vertical">
+            <label htmlFor="servico">Servico</label>
+            <Input
+              id="servico"
+              type="text"
+              value={states.servico?.servico}
+              onChange={handleChange}
+            />
+            <label htmlFor="valor">Valor</label>
+            <Input
+              id="valor"
+              type="number"
+              value={states.servico?.valor}
+              onChange={handleChange}
+            />
+            <label htmlFor="porcentagem">Repasse(%)</label>
+            <Input
+              id="porcentagem"
+              type="number"
+              status={
+                states.servico &&
+                !porcentagemIsValid(states.servico.porcentagem)
+                  ? "error"
+                  : ""
+              }
+              value={states.servico!.porcentagem}
+              onChange={handleChange}
+            />
+          </Space>
         </ModalAntd>
       )}
     </>

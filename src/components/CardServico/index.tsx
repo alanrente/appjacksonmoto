@@ -24,7 +24,7 @@ export function CardServico({
         </div>
         <div>
           <label>Repasse(%): </label>
-          <span>{servico.porcentagem * 100}%</span>
+          <span>{servico.porcentagem}%</span>
         </div>
       </div>
 
