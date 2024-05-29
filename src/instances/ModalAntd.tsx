@@ -10,7 +10,10 @@ export function ModalAntd({
   return (
     <Modal
       {...modalProps}
-      okButtonProps={{ style: { backgroundColor: "var(--main-bg-color)" } }}
+      okButtonProps={{
+        ...modalProps.okButtonProps,
+        style: { backgroundColor: "var(--main-bg-color)" },
+      }}
     >
       {children}
     </Modal>

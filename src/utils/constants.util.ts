@@ -18,3 +18,7 @@ export function toFixedAndComma(n: number | string, fractionDigits = 2) {
   if (isNaN(numero)) return "0";
   return numero.toFixed(fractionDigits).replace(".", ",");
 }
+
+export function calculaPorcentagem(valor: number) {
+  return valor / 100;
+}
