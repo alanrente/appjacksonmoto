@@ -26,6 +26,11 @@ export type ServicosAddOs = {
   idOrdemServico: number;
 };
 
+export type ServicoDellOs = {
+  ServicoId: number;
+  OrdemServicoId: number;
+};
+
 export type TMecanicoCreate = {
   mecanico: string;
 };

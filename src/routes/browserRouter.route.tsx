@@ -7,7 +7,7 @@ import { HomePage } from "../Pages/HomePage";
 import { ServicosPage } from "../Pages/Servicos";
 import { IRouteObject, ERouteObject } from "../interfaces/router.interface";
 import validateInfosChildren from "../utils/validateInfosChildren.util";
-import { OsPage } from "../Pages/OsPage";
+import { OsPage } from "../Pages/Os";
 import { Relatorio } from "../Pages/Relatorio";
 
 export const infosRouterChildren: IRouteObject = {

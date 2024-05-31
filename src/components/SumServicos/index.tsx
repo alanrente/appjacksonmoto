@@ -2,8 +2,9 @@ import "./style.css";
 import { IServico } from "../../interfaces/servico.interface";
 import { Divider, Modal } from "antd";
 import { MdDelete, MdEdit } from "react-icons/md";
-import { useState } from "react";
 import { toFixedAndComma } from "../../utils/constants.util";
+import { useSumServicos } from "./hook";
+import { ModalAntd } from "../../instances/ModalAntd";
 
 interface IProps {
   servicos: IServico[];
@@ -12,18 +13,15 @@ interface IProps {
 }
 
 export function SumServicosComponent({ servicos, args, show }: IProps) {
-  const [servicoToDelete, setservicoToDelete] = useState<IServico>();
-  const [showModal, setshowModal] = useState(false);
+  const {
+    handleDelete,
+    handleCancel,
+    servicoToDelete,
+    showModal,
+    handleOk,
+    states,
+  } = useSumServicos();
 
-  function handleDelete(serv: IServico) {
-    setservicoToDelete(serv);
-    setshowModal(true);
-  }
-
-  function handleCancel() {
-    setservicoToDelete(undefined);
-    setshowModal(false);
-  }
   return (
     <div
       className="sum-servicos__servico"
@@ -35,10 +33,10 @@ export function SumServicosComponent({ servicos, args, show }: IProps) {
           <div key={i.toString()} className="sum-servicos__conteudo">
             {/* <MdEdit /> */}
             <div className="sum-servicos__descricao-valor">
+              <MdDelete onClick={() => handleDelete(serv)} size={20} />
               <span>{`${serv.servico}`.slice(0, 35)}</span>
               <span>{toFixedAndComma(serv.osServico.valor)}</span>
             </div>
-            {/* <MdDelete onClick={() => handleDelete(serv)} /> */}
           </div>
         );
       })}
@@ -51,15 +49,30 @@ export function SumServicosComponent({ servicos, args, show }: IProps) {
               .reduce((a, b) => Number(a) + Number(b))
           )}
       </span>
-      <Modal
+      <ModalAntd
+        modalProps={{
+          open: showModal,
+          title: `Deseja deletar o serviço "${servicoToDelete?.servico.toUpperCase()}" desta OS?`,
+          okText: "Sim",
+          onCancel: handleCancel,
+          onOk: handleOk,
+          confirmLoading: states.loading,
+          destroyOnClose: true,
+          cancelText: "Não",
+          closable: false,
+        }}
+      />
+      {/* <Modal
         open={showModal}
         title={`Deseja deletar o serviço "${servicoToDelete?.servico.toUpperCase()}" desta OS?`}
         okText={"Sim"}
         onCancel={handleCancel}
+        onOk={handleOk}
+        confirmLoading={states.loading}
         destroyOnClose
-        cancelText={"Não!"}
+        cancelText={"Não"}
         closable={false}
-      ></Modal>
+      /> */}
     </div>
   );
 }

@@ -5,7 +5,7 @@ export function ModalAntd({
   children,
 }: {
   modalProps: ModalProps;
-  children: any;
+  children?: any;
 }) {
   return (
     <Modal

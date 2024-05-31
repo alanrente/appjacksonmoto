@@ -28,7 +28,10 @@ export function CardOSComponent({ os }: { os: IOrdemServico }) {
       <div className="card-os__mecanico">
         {tagIdOrdemServico(os.idOrdemServico)} - {os.mecanico.nome}
         {os.cliente.placa ? ` - ${os.cliente.placa}` : ` - ${os.cliente.nome}`}
-        <GrClose onClick={() => handleClick(true)} />
+        <GrClose
+          onClick={() => handleClick(true)}
+          style={{ cursor: "pointer" }}
+        />
       </div>
       <div className="card-os__buttons">
         <Button prefixCls="card-os__button" onClick={handleVisible}>

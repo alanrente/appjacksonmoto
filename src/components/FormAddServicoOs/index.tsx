@@ -3,6 +3,7 @@ import { AutoComplete, Button, Form, Input } from "antd";
 import { useFormAddServicoOs } from "./hook";
 
 import { CloseOutlined, PlusOutlined } from "@ant-design/icons";
+import { ButtonAntd } from "../../instances/ButtonAntd";
 
 export function FormAddServicoOs({
   idOrdemServico,
@@ -61,6 +62,16 @@ export function FormAddServicoOs({
                     message: "Digite o valor do serviço",
                     required: true,
                   },
+                  () => ({
+                    validator(_, value) {
+                      if (value > 0) {
+                        return Promise.resolve();
+                      }
+                      return Promise.reject(
+                        new Error("Valor deve ser maior que 0")
+                      );
+                    },
+                  }),
                 ]}
               >
                 <Input
@@ -87,9 +98,7 @@ export function FormAddServicoOs({
           ))
         }
       </Form.List>
-      <Button htmlType="submit" type="primary" loading={loading}>
-        Salvar
-      </Button>
+      <ButtonAntd props={{ htmlType: "submit", loading }}>Salvar</ButtonAntd>
     </Form>
   );
 }

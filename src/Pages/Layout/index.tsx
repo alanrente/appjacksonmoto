@@ -1,7 +1,7 @@
 import "./style.css";
 import { Outlet, useNavigate } from "react-router-dom";
 import { authProvider } from "../../contexts/auth.context";
-import { Button, Skeleton } from "antd";
+import { Button } from "antd";
 import {
   infosRouteDefault,
   infosRouterChildren,
@@ -16,21 +16,10 @@ import LoginComponent from "../../components/Login";
 export function Layout() {
   const { isAuthenticated } = authProvider;
   const navigate = useNavigate();
-  const { serverIsOnline, visible, refSideBar, setvisible } = useLayout();
+  const { visible, refSideBar, setvisible } = useLayout();
 
   return (
     <>
-      {/* {!serverIsOnline ? (
-        <>
-          <span style={{ marginLeft: ".5rem" }}>Carregando sistema...</span>
-          <Skeleton
-            active
-            prefixCls="skeleton-antd"
-            paragraph={{ rows: 3 }}
-            title={{ width: "100%", style: { height: "20vh", marginTop: 0 } }}
-          />
-        </>
-      ) : ( */}
       <div className="App">
         {!isAuthenticated ? (
           <LoginComponent />
