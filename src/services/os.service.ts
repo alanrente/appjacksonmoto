@@ -4,6 +4,7 @@ import { useMessageAntd } from "../hooks/useMessageAntd";
 import { QueryOrdemServico } from "../interfaces/query.interface";
 import {
   IOrdemServico,
+  ServicoDellOs,
   ServicosAddOs,
   TOrdemServicoCreate,
 } from "../interfaces/servico.interface";
@@ -112,6 +113,16 @@ export async function addServicosInOs(servicosAndIdOS: ServicosAddOs) {
     .catch((err) =>
       useMessageAntd({ content: `${err.message}`, type: "error" })
     );
+}
+
+export async function removeServicosOs({
+  OrdemServicoId,
+  ServicoId,
+}: ServicoDellOs) {
+  await api.delete("/ordem-servicos/deletar-servico-os", {
+    data: { OrdemServicoId, ServicoId },
+    headers: { Authorization: getBearerToken() },
+  });
 }
 
 export async function closeOrReopen({

@@ -53,10 +53,11 @@ export function useFormAddServicoOs(
       Alert({ type: "error", message: err.message });
     },
     onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["ordens-servico"] });
       setLoading(false);
       onCloseModal && onCloseModal();
-      queryClient.invalidateQueries({ queryKey: ["ordens-servico"] });
     },
+    gcTime: 0,
   });
 
   function changeOrRemoveValuesServico({
