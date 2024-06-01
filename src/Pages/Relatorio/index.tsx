@@ -18,8 +18,10 @@ import {
   toFixedAndComma,
 } from "../../utils/constants.util";
 import moment from "moment-timezone";
+import { RepositoryIcons } from "../../assets/icons/repository";
 
 export function Relatorio() {
+  const { SubArrowRight } = RepositoryIcons();
   const {
     ordem,
     range,
@@ -122,7 +124,7 @@ export function Relatorio() {
                   onClick={() => handleClick(ordem)}
                 >
                   <div>
-                    <CalendarFilled />
+                    <span>{tagIdOrdemServico(ordem.idOrdemServico)}</span>
                     {moment(`${ordem.dataExecucao}`).format("DD/MM/YYYY")}
                   </div>
 
@@ -209,16 +211,22 @@ export function Relatorio() {
               ) : null}
             </div>
             <div>
+              <FiTool />
               {ordem.servicos.map((servico) => {
                 return (
-                  <div>
-                    <FiTool />
+                  <div style={{ marginLeft: "2px" }}>
+                    <SubArrowRight />
                     <span>{servico.servico} - </span>
-                    <span>{toFixedAndComma(servico.valor || 0)} - </span>
+                    <span>
+                      {toFixedAndComma(servico.osServico.valor || 0)} -{" "}
+                    </span>
                     <span>{servico.porcentagem * 100}%</span>
                     <span>
-                      {servico.valorPorcentagem &&
-                        " - " + toFixedAndComma(servico.valorPorcentagem || 0)}
+                      {servico.osServico.valorPorcentagem &&
+                        " - " +
+                          toFixedAndComma(
+                            servico.osServico.valorPorcentagem || 0
+                          )}
                     </span>
                   </div>
                 );
@@ -228,7 +236,11 @@ export function Relatorio() {
             <div>
               <MdOutlineAttachMoney />
               {toFixedAndComma(
-                calcValores(ordem.servicos.map((servico) => servico.valor) || 0)
+                calcValores(
+                  ordem.servicos.map((servico) =>
+                    Number(servico.osServico.valor)
+                  ) || 0
+                )
               )}
             </div>
           </>
