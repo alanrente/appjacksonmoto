@@ -1,7 +1,9 @@
 export interface IOsServico {
+  idOsServicos: number;
   valor: number | string;
   ServicoId: number;
   OrdemServicoId: number;
+  valorPorcentagem: number;
 }
 
 export interface IServico {
@@ -10,7 +12,6 @@ export interface IServico {
   valor: number;
   osServico: IOsServico;
   porcentagem: number;
-  valorPorcentagem: number;
 }
 export type IServicoSV = {
   servico: string;
