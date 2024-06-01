@@ -21,6 +21,18 @@
   box-shadow: 0 10px 25px 0 var(--bg-blue-light);
 }
 
+.div-infos > div {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 4px;
+}
+
+.div-infos span {
+  text-align: center;
+  font-weight: 500;
+}
+
 .input-relatorio {
   /* width: 150px !important; */
   text-align: center;
