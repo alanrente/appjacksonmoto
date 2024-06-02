@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { IServico, ServicoDellOs } from "../../interfaces/servico.interface";
+import { IServico } from "../../interfaces/servico.interface";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { message } from "antd";
 import { removeServicosOs } from "../../services/os.service";
@@ -25,15 +25,17 @@ export function useSumServicos() {
   }
 
   const mutationOk = useMutation({
-    async mutationFn({ ServicoId, OrdemServicoId }: ServicoDellOs) {
+    async mutationFn(idOsServicos: number) {
       setStates({ ...states, loading: true });
-      await removeServicosOs({ ServicoId, OrdemServicoId });
+      await removeServicosOs(idOsServicos);
     },
-    onSuccess(_, { OrdemServicoId, ServicoId }) {
+    onSuccess() {
       queryClient.invalidateQueries({ queryKey: ["ordens-servico"] });
       setStates({ ...states, loading: false });
       setshowModal(false);
-      message.success(`Servico ${ServicoId} deletado da Os ${OrdemServicoId}`);
+      message.success(
+        `Servico ${servicoToDelete?.idServico} deletado da Os ${servicoToDelete?.osServico.OrdemServicoId}`
+      );
     },
     onError(error) {
       message.error(error.message);
@@ -46,11 +48,10 @@ export function useSumServicos() {
   async function handleOk() {
     if (!servicoToDelete) return;
     const {
-      idServico,
-      osServico: { OrdemServicoId },
+      osServico: { idOsServicos },
     } = servicoToDelete;
 
-    await mutationOk.mutateAsync({ ServicoId: idServico, OrdemServicoId });
+    await mutationOk.mutateAsync(idOsServicos);
   }
 
   return {

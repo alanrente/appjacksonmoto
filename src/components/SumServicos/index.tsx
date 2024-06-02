@@ -1,6 +1,6 @@
 import "./style.css";
 import { IServico } from "../../interfaces/servico.interface";
-import { Divider, Modal } from "antd";
+import { Divider } from "antd";
 import { MdDelete, MdEdit } from "react-icons/md";
 import { toFixedAndComma } from "../../utils/constants.util";
 import { useSumServicos } from "./hook";
@@ -31,7 +31,6 @@ export function SumServicosComponent({ servicos, args, show }: IProps) {
       {servicos.map((serv, i) => {
         return (
           <div key={i.toString()} className="sum-servicos__conteudo">
-            {/* <MdEdit /> */}
             <div className="sum-servicos__descricao-valor">
               <MdDelete onClick={() => handleDelete(serv)} size={20} />
               <span>{`${serv.servico}`.slice(0, 35)}</span>
@@ -62,17 +61,6 @@ export function SumServicosComponent({ servicos, args, show }: IProps) {
           closable: false,
         }}
       />
-      {/* <Modal
-        open={showModal}
-        title={`Deseja deletar o serviço "${servicoToDelete?.servico.toUpperCase()}" desta OS?`}
-        okText={"Sim"}
-        onCancel={handleCancel}
-        onOk={handleOk}
-        confirmLoading={states.loading}
-        destroyOnClose
-        cancelText={"Não"}
-        closable={false}
-      /> */}
     </div>
   );
 }
