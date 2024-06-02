@@ -1,9 +1,9 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Button, Form, type FormProps, Input } from "antd";
 import { useLocation, useNavigate } from "react-router-dom";
 import { User } from "../../interfaces/login.interface";
 import "./style.css";
-import { authProvider } from "../../contexts/auth.context";
+import { authProvider, hasUser } from "../../contexts/auth.context";
 import { ERouteObject } from "../../interfaces/router.interface";
 
 function LoginComponent() {
@@ -12,10 +12,11 @@ function LoginComponent() {
 
   const [load, setload] = useState(false);
 
+  const params = new URLSearchParams(location.search);
+  const from = params.get("from") || `/${ERouteObject.os}`;
+
   const onFinish: FormProps<User>["onFinish"] = async (values: User) => {
     setload(true);
-    const params = new URLSearchParams(location.search);
-    const from = params.get("from") || `/${ERouteObject.os}`;
 
     try {
       await authProvider.signin(values);
@@ -28,6 +29,11 @@ function LoginComponent() {
       setload(false);
     }
   };
+
+  useEffect(() => {
+    if (hasUser()) navigate(from);
+  });
+
   return (
     <Form
       name="basic"
